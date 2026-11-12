@@ -10,7 +10,7 @@
 
 <p align="center">
   <a href="https://www.npmjs.com/package/dsh-keeper-plugin"><img alt="npm" src="https://img.shields.io/npm/v/dsh-keeper-plugin.svg"></a>
-  <a href="LICENSE"><img alt="license" src="https://img.shields.io/badge/license-MIT-blue.svg"></a>
+  <a href="https://github.com/supaleyer/dsh-keeper/blob/main/LICENSE"><img alt="license" src="https://img.shields.io/badge/license-MIT-blue.svg"></a>
   <img alt="DSH" src="https://img.shields.io/badge/DSH-%3E%3D0.2.2--rc.1-6f5cff.svg">
 </p>
 
