@@ -22,11 +22,13 @@ DSH 管家是一个带左侧栏入口的 DSH 插件。它把散落在 DSH 各处
 
 ## 界面预览
 
-![DSH 管家主面板](https://raw.githubusercontent.com/swrabbit/dsh-keeper/main/docs/screenshots/01-overview.png)
-
-| 会话管理 | 通知管理 |
+| 主面板 | 通知管理 |
 | --- | --- |
-| ![会话管理](https://raw.githubusercontent.com/swrabbit/dsh-keeper/main/docs/screenshots/02-sessions.png) | ![通知管理](https://raw.githubusercontent.com/swrabbit/dsh-keeper/main/docs/screenshots/03-notifications.png) |
+| ![DSH 管家主面板](https://raw.githubusercontent.com/swrabbit/dsh-keeper/main/docs/screenshots/01-overview.png) | ![通知管理](https://raw.githubusercontent.com/swrabbit/dsh-keeper/main/docs/screenshots/02-notifications.png) |
+
+| 插件管理 | 回收站 |
+| --- | --- |
+| ![插件管理](https://raw.githubusercontent.com/swrabbit/dsh-keeper/main/docs/screenshots/03-plugins.png) | ![回收站](https://raw.githubusercontent.com/swrabbit/dsh-keeper/main/docs/screenshots/04-trash.png) |
 
 ## 功能
 
