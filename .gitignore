@@ -1,0 +1,5 @@
+node_modules/
+*.tgz
+client.recovered.js
+.DS_Store
+Thumbs.db

@@ -1,0 +1,8 @@
+# DSH Keeper bundle patch.
+#
+# The bundle installs one Cordis entry: the host half serves the panel's data
+# API, while the client half ships in the same package and is loaded by the
+# Web UI module loader.
+- insert:
+    - id: dsh-keeper
+      name: 'dsh-keeper-plugin'
