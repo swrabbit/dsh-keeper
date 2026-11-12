@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/supaleyer/dsh-keeper/main/icon.svg" width="72" height="72" alt="DSH Keeper icon">
+  <img src="https://raw.githubusercontent.com/swrabbit/dsh-keeper/main/icon.svg" width="72" height="72" alt="DSH Keeper icon">
 </p>
 
 <h1 align="center">DSH 管家 · DSH Keeper</h1>
@@ -10,7 +10,7 @@
 
 <p align="center">
   <a href="https://www.npmjs.com/package/dsh-keeper-plugin"><img alt="npm" src="https://img.shields.io/npm/v/dsh-keeper-plugin.svg"></a>
-  <a href="https://github.com/supaleyer/dsh-keeper/blob/main/LICENSE"><img alt="license" src="https://img.shields.io/badge/license-MIT-blue.svg"></a>
+  <a href="https://github.com/swrabbit/dsh-keeper/blob/main/LICENSE"><img alt="license" src="https://img.shields.io/badge/license-MIT-blue.svg"></a>
   <img alt="DSH" src="https://img.shields.io/badge/DSH-%3E%3D0.2.2--rc.1-6f5cff.svg">
 </p>
 
@@ -22,11 +22,11 @@ DSH 管家是一个带左侧栏入口的 DSH 插件。它把散落在 DSH 各处
 
 ## 界面预览
 
-![DSH 管家主面板](https://raw.githubusercontent.com/supaleyer/dsh-keeper/main/docs/screenshots/01-overview.png)
+![DSH 管家主面板](https://raw.githubusercontent.com/swrabbit/dsh-keeper/main/docs/screenshots/01-overview.png)
 
 | 会话管理 | 通知管理 |
 | --- | --- |
-| ![会话管理](https://raw.githubusercontent.com/supaleyer/dsh-keeper/main/docs/screenshots/02-sessions.png) | ![通知管理](https://raw.githubusercontent.com/supaleyer/dsh-keeper/main/docs/screenshots/03-notifications.png) |
+| ![会话管理](https://raw.githubusercontent.com/swrabbit/dsh-keeper/main/docs/screenshots/02-sessions.png) | ![通知管理](https://raw.githubusercontent.com/swrabbit/dsh-keeper/main/docs/screenshots/03-notifications.png) |
 
 ## 功能
 
@@ -96,12 +96,12 @@ dsh-keeper-plugin
 ### 本地开发安装
 
 ```bash
-git clone https://github.com/supaleyer/dsh-keeper.git
+git clone https://github.com/swrabbit/dsh-keeper.git
 cd dsh-keeper
 ```
 
 把该目录链接到 DSH profile 的依赖中，或在插件管理器里选择本地 bundle 目录。具体命令取决于
-你的 DSH profile 布局；开发调试与测试命令见 [docs/DEVELOPMENT.md](https://github.com/supaleyer/dsh-keeper/blob/main/docs/DEVELOPMENT.md)。
+你的 DSH profile 布局；开发调试与测试命令见 [docs/DEVELOPMENT.md](https://github.com/swrabbit/dsh-keeper/blob/main/docs/DEVELOPMENT.md)。
 
 ## 使用
 
@@ -165,13 +165,13 @@ node .dsh-keeper-dev/test-expand.mjs
 ```
 
 三套测试当前分别为 **102/102、88/88、42/42** 通过。开发过程、设计取舍和历史迭代记录保留在
-[docs/DEVELOPMENT.md](https://github.com/supaleyer/dsh-keeper/blob/main/docs/DEVELOPMENT.md)。
+[docs/DEVELOPMENT.md](https://github.com/swrabbit/dsh-keeper/blob/main/docs/DEVELOPMENT.md)。
 
 ## 反馈
 
-- Issue：<https://github.com/supaleyer/dsh-keeper/issues>
+- Issue：<https://github.com/swrabbit/dsh-keeper/issues>
 - 市场条目：awesome-dsh-plugin 收录后可在 DSH 插件市场直接搜索。
 
 ## License
 
-[MIT](https://github.com/supaleyer/dsh-keeper/blob/main/LICENSE) © 2026 supaleyer
+[MIT](https://github.com/swrabbit/dsh-keeper/blob/main/LICENSE) © 2026 supaleyer

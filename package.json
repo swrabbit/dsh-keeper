@@ -10,11 +10,11 @@
   "private": false,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/supaleyer/dsh-keeper.git"
+    "url": "git+https://github.com/swrabbit/dsh-keeper.git"
   },
-  "homepage": "https://github.com/supaleyer/dsh-keeper#readme",
+  "homepage": "https://github.com/swrabbit/dsh-keeper#readme",
   "bugs": {
-    "url": "https://github.com/supaleyer/dsh-keeper/issues"
+    "url": "https://github.com/swrabbit/dsh-keeper/issues"
   },
   "publishConfig": {
     "access": "public"

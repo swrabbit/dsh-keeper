@@ -1,7 +1,7 @@
-url: https://github.com/supaleyer/dsh-keeper
-name: supaleyer/dsh-keeper
+url: https://github.com/swrabbit/dsh-keeper
+name: swrabbit/dsh-keeper
 category: session
 description:
   en: 'DSH Keeper: manage sessions by workspace, plugins, sidebar entries, and notifications from one panel.'
   zh: 'DSH 管家：按工作区管理会话，并统一查看插件、侧栏入口与任务通知。'
-icon: https://raw.githubusercontent.com/supaleyer/dsh-keeper/main/docs/screenshots/icon-512.png
+icon: https://raw.githubusercontent.com/swrabbit/dsh-keeper/main/docs/screenshots/icon-512.png
