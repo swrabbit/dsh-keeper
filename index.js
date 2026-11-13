@@ -28,7 +28,7 @@ export const inject = [
 const NS = 'dsh-keeper';
 const PANEL_ID = 'dsh-keeper';
 const API_PATH = '/dsh-keeper/api';
-const PLUGIN_VERSION = '0.1.2';
+const PLUGIN_VERSION = '0.1.3';
 const META_NAME = '.dsh-keeper-trash.json';
 /** Pre-rename identifiers. Kept only so existing installs migrate in place. */
 const LEGACY_NS = 'sidebar-studio';

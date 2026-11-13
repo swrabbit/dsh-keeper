@@ -142,8 +142,8 @@ cd dsh-keeper
 ## 兼容性
 
 - 主要在 **DSH Desktop 0.2.2-rc.1（Windows）** 上开发和验证。
-- `package.json` 声明 `engines.dsh: ">=0.2.2-rc.1 <0.3.0"`。超出该范围的新版本可能可用，
-  但未经过验证。
+- `package.json` 声明 `engines.dsh: ">=0.2.2-rc.1"`。0.3 及之后的新版本尚未逐版验证，
+  遇到问题欢迎反馈。
 - macOS / Linux 版 DSH 尚未做完整回归；如果遇到平台差异，欢迎提 issue。
 
 ### 已知限制
