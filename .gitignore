@@ -1,5 +1,6 @@
 node_modules/
 *.tgz
 client.recovered.js
+docs/DEVELOPMENT.md
 .DS_Store
 Thumbs.db

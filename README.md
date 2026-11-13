@@ -103,7 +103,7 @@ cd dsh-keeper
 ```
 
 把该目录链接到 DSH profile 的依赖中，或在插件管理器里选择本地 bundle 目录。具体命令取决于
-你的 DSH profile 布局；开发调试与测试命令见 [docs/DEVELOPMENT.md](https://github.com/swrabbit/dsh-keeper/blob/main/docs/DEVELOPMENT.md)。
+你的 DSH profile 布局；开发调试与测试命令见下方「开发与测试」。
 
 ## 使用
 
@@ -166,8 +166,7 @@ node .dsh-keeper-dev/test-client.mjs
 node .dsh-keeper-dev/test-expand.mjs
 ```
 
-三套测试当前分别为 **102/102、88/88、42/42** 通过。开发过程、设计取舍和历史迭代记录保留在
-[docs/DEVELOPMENT.md](https://github.com/swrabbit/dsh-keeper/blob/main/docs/DEVELOPMENT.md)。
+三套测试当前分别为 **102/102、88/88、42/42** 通过。开发过程、设计取舍和历史迭代记录仅保留在本地开发目录的 `docs/DEVELOPMENT.md`，不随仓库发布。
 
 ## 反馈
 
