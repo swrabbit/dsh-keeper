@@ -166,8 +166,6 @@ node .dsh-keeper-dev/test-client.mjs
 node .dsh-keeper-dev/test-expand.mjs
 ```
 
-三套测试当前分别为 **102/102、88/88、42/42** 通过。开发过程、设计取舍和历史迭代记录仅保留在本地开发目录的 `docs/DEVELOPMENT.md`，不随仓库发布。
-
 ## 反馈
 
 - Issue：<https://github.com/swrabbit/dsh-keeper/issues>
