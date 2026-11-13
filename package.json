@@ -1,6 +1,6 @@
 {
   "name": "dsh-keeper-plugin",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "DSH Keeper — manage DSH workspace sessions, plugins, sidebar entries, and notifications in one place. DSH 管家：集中管理 DSH 的会话、插件、侧栏入口与通知。",
   "icon": "icon.svg",
   "type": "module",
