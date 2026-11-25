@@ -168,8 +168,6 @@ node .dsh-keeper-dev/test-expand.mjs
 
 ## 更新日志
 
-每个版本的变更见 [CHANGELOG.md](https://github.com/swrabbit/dsh-keeper/blob/main/CHANGELOG.md)。
-
 ### 0.1.4 - 2026-11-25
 
 #### 新增
