@@ -28,12 +28,14 @@ export const inject = [
 const NS = 'dsh-keeper';
 const PANEL_ID = 'dsh-keeper';
 const API_PATH = '/dsh-keeper/api';
-const PLUGIN_VERSION = '0.1.3';
+const PLUGIN_VERSION = '0.1.4';
 const META_NAME = '.dsh-keeper-trash.json';
 /** Pre-rename identifiers. Kept only so existing installs migrate in place. */
 const LEGACY_NS = 'sidebar-studio';
 const LEGACY_META_NAME = '.sidebar-studio-trash.json';
 const LEGACY_BUNDLE = 'dsh-sidebar-studio';
+/** Bundle names the keeper may be installed under; every self-protection check must recognize all of them. */
+const SELF_BUNDLES = new Set(['dsh-keeper', 'dsh-keeper-plugin', LEGACY_BUNDLE]);
 
 function isSelfEntryId(value) {
   return typeof value === 'string' && (value.indexOf('dsh-keeper') !== -1 || value.indexOf(LEGACY_BUNDLE) !== -1);
@@ -63,7 +65,7 @@ const NOTIFY_DEFAULTS = {
 };
 
 const DEFAULT_SETTINGS = {
-  defaultDeleteMode: 'trash',
+  deleteMode: 'trash',
   confirmPurge: true,
   defaultExportFormat: 'md',
   notifications: { ...NOTIFY_DEFAULTS },
@@ -342,7 +344,7 @@ function readState() {
     version: 1,
     hiddenPanels: [...new Set(hidden)],
     settings: {
-      defaultDeleteMode: settings.defaultDeleteMode === 'archive' ? 'archive' : 'trash',
+      deleteMode: settings.deleteMode === 'delete' ? 'delete' : 'trash',
       confirmPurge: settings.confirmPurge !== false,
       defaultExportFormat: normalizeExportFormat(settings.defaultExportFormat),
       notifications: normalizeNotificationSettings(settings.notifications),
@@ -356,7 +358,7 @@ function writeState(state) {
     version: 1,
     hiddenPanels: [...new Set(state.hiddenPanels ?? [])],
     settings: {
-      defaultDeleteMode: state.settings?.defaultDeleteMode === 'archive' ? 'archive' : 'trash',
+      deleteMode: state.settings?.deleteMode === 'delete' ? 'delete' : 'trash',
       confirmPurge: state.settings?.confirmPurge !== false,
       defaultExportFormat: normalizeExportFormat(state.settings?.defaultExportFormat),
       notifications: normalizeNotificationSettings(state.settings?.notifications),
@@ -869,7 +871,7 @@ async function uninstallPlugin(ctx, payload) {
   const name = typeof payload?.bundle === 'string' ? payload.bundle.trim() : '';
   if (!name) throw fail('BAD_BUNDLE', '缺少插件包名。');
   if (payload?.confirm !== true) throw fail('CONFIRM_REQUIRED', '卸载操作需要二次确认。');
-  if (name === 'dsh-keeper' || name === LEGACY_BUNDLE) throw fail('PROTECTED', '不能卸载 DSH 管家自身。');
+  if (SELF_BUNDLES.has(name)) throw fail('PROTECTED', '不能卸载 DSH 管家自身。');
   let bundle = null;
   try {
     const bundles = await manager.listBundles();
@@ -1235,7 +1237,167 @@ async function purgeSessions(ctx, payload) {
     } catch {
       /* ignore */
     }
+    await forgetSessionProjection(ctx, id);
+    await cleanSessionSpill(ctx, id);
+    emitSessionRemoved(ctx, id);
     done.push({ sessionId: id });
+  }
+  return { done, errors };
+}
+
+/* ------------------------------------------------------ permanent delete */
+
+function sessionService(ctx) {
+  try {
+    if (ctx && typeof ctx.get === 'function') {
+      const service = ctx.get('sessions');
+      if (service !== undefined) return service;
+    }
+  } catch {
+    /* service lookup is best effort */
+  }
+  try {
+    return ctx ? ctx.sessions : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+function insideDirectory(root, target) {
+  const base = path.resolve(root);
+  const resolved = path.resolve(target);
+  return resolved === base || resolved.startsWith(base + path.sep);
+}
+
+async function forgetSessionProjection(ctx, sessionId) {
+  try {
+    if (!ctx || typeof ctx.get !== 'function') return;
+    const cache = ctx.get('sessionProjectionCache');
+    if (cache && typeof cache.requireTable === 'function') {
+      await cache.requireTable().delete(sessionId);
+    }
+  } catch {
+    /* projection cache cleanup is best effort */
+  }
+}
+
+async function cleanSessionSpill(ctx, sessionId) {
+  try {
+    if (!ctx || typeof ctx.get !== 'function') return;
+    const store = ctx.get('spillStore');
+    const root = store && typeof store.root === 'string' ? store.root : '';
+    if (!root) return;
+    const target = path.join(root, sessionId);
+    if (!insideDirectory(root, target) || !fs.existsSync(target)) return;
+    fs.rmSync(target, { recursive: true, force: true });
+  } catch {
+    /* spill cleanup is best effort */
+  }
+}
+
+function removeSessionTranscriptDir(dir) {
+  if (!insideDirectory(sessionsRoot(), dir)) {
+    throw fail('BAD_SESSION_DIR', '会话目录不在 sessions 根目录下，拒绝删除。');
+  }
+  fs.rmSync(dir, { recursive: true, force: true });
+}
+
+async function subagentDescendantIds(ctx, parentId) {
+  const ids = [];
+  try {
+    const snapshots = await ctx.sessionPersistence.list();
+    for (const snapshot of snapshots) {
+      const header = snapshot && snapshot.header;
+      if (!header || typeof header.id !== 'string' || header.id === parentId) continue;
+      if (header.origin === 'subagent' && header.parentSession === parentId) ids.push(header.id);
+    }
+  } catch {
+    /* descendant lookup is best effort */
+  }
+  return ids;
+}
+
+function emitSessionRemoved(ctx, sessionId) {
+  try {
+    if (ctx && typeof ctx.emit === 'function') ctx.emit('api-session/removed', sessionId);
+  } catch {
+    /* listeners are best effort */
+  }
+}
+
+async function detachLiveSession(ctx, sessionId) {
+  const sessions = sessionService(ctx);
+  if (!sessions || typeof sessions.get !== 'function') return;
+  let live;
+  try {
+    live = sessions.get(sessionId);
+  } catch {
+    live = undefined;
+  }
+  if (!live) return;
+  try {
+    if (typeof sessions.flush === 'function') await sessions.flush(live);
+  } catch {
+    /* flush is best effort */
+  }
+  try {
+    if (typeof sessions.liveEntryFor === 'function' && typeof sessions.detachEntered === 'function') {
+      await sessions.detachEntered(sessions.liveEntryFor(live));
+    }
+  } catch {
+    /* detach is best effort */
+  }
+}
+
+async function deleteSessionsPermanently(ctx, payload) {
+  const sessionIds = Array.isArray(payload?.sessionIds) ? payload.sessionIds : [];
+  if (sessionIds.length === 0) throw fail('BAD_REQUEST', '没有选择会话。');
+  if (sessionIds.length > 100) throw fail('BAD_REQUEST', '一次最多处理 100 个会话。');
+  const running = await runningSet(ctx);
+  const done = [];
+  const errors = [];
+  const pending = [...sessionIds];
+  const seen = new Set();
+  while (pending.length > 0) {
+    const rawId = pending.shift();
+    let id;
+    try {
+      id = assertSessionId(rawId);
+    } catch (error) {
+      errors.push({ sessionId: String(rawId), code: error.code ?? 'BAD_SESSION_ID', message: error.message });
+      continue;
+    }
+    if (seen.has(id)) continue;
+    seen.add(id);
+    if (running.has(id)) {
+      errors.push({ sessionId: id, code: 'SESSION_RUNNING', message: '会话正在运行，无法删除。' });
+      continue;
+    }
+    try {
+      const found = listSessionDirs().find((entry) => entry.id === id);
+      await detachLiveSession(ctx, id);
+      await detachSession(ctx, id);
+      await forgetSessionProjection(ctx, id);
+      await cleanSessionSpill(ctx, id);
+      try {
+        await ctx.workspaceRegistry.unarchiveSession(id);
+      } catch {
+        /* stale archive flag is harmless */
+      }
+      try {
+        await ctx.workspaceRegistry.unpinSession(id);
+      } catch {
+        /* stale pin flag is harmless */
+      }
+      if (found) removeSessionTranscriptDir(found.dir);
+      emitSessionRemoved(ctx, id);
+      done.push({ sessionId: id, mode: 'delete' });
+      for (const childId of await subagentDescendantIds(ctx, id)) {
+        if (!seen.has(childId) && !running.has(childId)) pending.push(childId);
+      }
+    } catch (error) {
+      errors.push({ sessionId: id, code: error.code ?? 'DELETE_FAILED', message: error?.message ?? '删除失败' });
+    }
   }
   return { done, errors };
 }
@@ -2510,6 +2672,7 @@ function createApi(ctx) {
   return {
     bootstrap: () => buildBootstrap(ctx),
     deleteSessions: (payload) => deleteSessions(ctx, payload),
+    deleteSessionsPermanently: (payload) => deleteSessionsPermanently(ctx, payload),
     restoreSessions: (payload) => restoreSessions(ctx, payload),
     purgeSessions: (payload) => purgeSessions(ctx, payload),
     archiveSessions: (payload) => deleteSessions(ctx, { ...payload, mode: 'archive' }),
@@ -2576,8 +2739,8 @@ function createApi(ctx) {
       const patch = payload?.settings;
       if (!patch || typeof patch !== 'object') throw fail('BAD_REQUEST', '缺少设置内容。');
       const state = readState();
-      if (patch.defaultDeleteMode === 'trash' || patch.defaultDeleteMode === 'archive') {
-        state.settings.defaultDeleteMode = patch.defaultDeleteMode;
+      if (patch.deleteMode === 'trash' || patch.deleteMode === 'delete') {
+        state.settings.deleteMode = patch.deleteMode;
       }
       if (typeof patch.confirmPurge === 'boolean') state.settings.confirmPurge = patch.confirmPurge;
       if (EXPORT_FORMATS.includes(patch.defaultExportFormat)) {

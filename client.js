@@ -11,6 +11,8 @@ const NS = 'dsh-keeper';
 const PANEL_ID = 'dsh-keeper';
 const API_BASE = '/dsh-keeper/api/';
 const LEGACY_BUNDLE = 'dsh-sidebar-studio';
+/** Bundle names the keeper may be installed under; every self-protection check must recognize all of them. */
+const SELF_BUNDLES = new Set(['dsh-keeper', 'dsh-keeper-plugin', LEGACY_BUNDLE]);
 const STORAGE_PREFIX = 'dsh-keeper:';
 const LEGACY_STORAGE_PREFIX = 'dsh-sidebar-studio:';
 
@@ -134,6 +136,8 @@ const DICT = {
     archive: '归档',
     unarchive: '取消归档',
     moveToTrash: '移入回收站',
+    deleteSession: '删除会话',
+    deleteSessionHint: '永久删除该会话：日志、缓存与索引一并清理，不可恢复',
     restore: '恢复',
     purge: '彻底删除',
     open: '打开',
@@ -175,12 +179,15 @@ const DICT = {
     archivedMsg: '已归档 {n} 项',
     restoredMsg: '已恢复 {n} 项',
     purgedMsg: '已彻底删除 {n} 项',
+    deletedMsg: '已删除 {n} 个会话',
     cleanedMsg: '已清理 {n} 个空会话',
     undo: '撤销',
     confirmPurgeTitle: '彻底删除会话？',
     confirmPurgeBody: '将从磁盘删除 {n} 个会话（约 {size}）。此操作不可撤销，删除后重启也不会恢复。',
     confirmEmptyTitle: '清空回收站？',
     confirmEmptyBody: '将彻底删除回收站中全部 {n} 个会话（约 {size}），此操作不可撤销。',
+    confirmDeleteTitle: '删除会话？',
+    confirmDeleteBody: '将永久删除 {n} 个会话（约 {size}），并清理其日志、缓存与索引。此操作不可撤销，删除后重启也不会恢复。',
     cancel: '取消',
     confirm: '确认删除',
     topSizes: '空间占用排行',
@@ -336,13 +343,16 @@ const DICT = {
     settingsHint: '设置页位于「设置 → DSH 管家」。',
     settingsTitle: 'DSH 管家设置',
     settingsSubtitle: '删除策略与侧栏入口的默认行为',
-    defaultDeleteMode: '默认删除行为',
+    defaultDeleteMode: '删除会话行为',
     modeTrash: '移入回收站',
     modeTrashHint: '推荐。会话先进入回收站，可恢复；彻底删除需要再次确认。',
     modeArchive: '仅归档',
     modeArchiveHint: '只从侧栏隐藏，不移动磁盘文件，可从会话列表取消归档。',
-    confirmPurgeLabel: '彻底删除前二次确认',
-    confirmPurgeHint: '关闭后彻底删除不再弹出确认框，请谨慎使用。',
+    modeDelete: '永久删除',
+    modeDeleteHint: '直接删除日志、缓存与索引，不可恢复。',
+    deleteModeHint: '列表「删除会话」的行为：默认移入回收站、可恢复；选永久删除时删除前会二次确认。',
+    confirmPurgeLabel: '永久删除前二次确认',
+    confirmPurgeHint: '关闭后永久删除（列表删除或回收站彻底删除）不再弹出确认框，请谨慎使用。',
     entryVisible: '显示侧栏入口',
     entryVisibleHint: '关闭后侧栏底部不再显示「DSH 管家」图标，设置页仍然可用。',
     resetSettings: '恢复默认设置',
@@ -455,6 +465,8 @@ const DICT = {
     archive: 'Archive',
     unarchive: 'Unarchive',
     moveToTrash: 'Move to trash',
+    deleteSession: 'Delete session',
+    deleteSessionHint: 'Permanently delete this session: transcript, caches and index are removed. This cannot be undone.',
     restore: 'Restore',
     purge: 'Delete permanently',
     open: 'Open',
@@ -496,12 +508,15 @@ const DICT = {
     archivedMsg: 'Archived {n}',
     restoredMsg: 'Restored {n}',
     purgedMsg: 'Permanently deleted {n}',
+    deletedMsg: 'Deleted {n} sessions',
     cleanedMsg: 'Cleaned {n} blank sessions',
     undo: 'Undo',
     confirmPurgeTitle: 'Delete permanently?',
     confirmPurgeBody: 'This removes {n} sessions ({size}) from disk. It cannot be undone and will not come back after a restart.',
     confirmEmptyTitle: 'Empty the trash?',
     confirmEmptyBody: 'This permanently deletes all {n} sessions in the trash ({size}). It cannot be undone.',
+    confirmDeleteTitle: 'Delete session?',
+    confirmDeleteBody: 'This permanently deletes {n} sessions ({size}) and clears their transcript, caches and index. It cannot be undone and will not come back after a restart.',
     cancel: 'Cancel',
     confirm: 'Delete permanently',
     topSizes: 'Largest sessions',
@@ -657,13 +672,16 @@ const DICT = {
     settingsHint: 'Find this page under Settings → DSH Keeper.',
     settingsTitle: 'DSH Keeper settings',
     settingsSubtitle: 'Delete policy and sidebar entry defaults',
-    defaultDeleteMode: 'Default delete action',
+    defaultDeleteMode: 'Delete action in the session list',
     modeTrash: 'Move to trash',
     modeTrashHint: 'Recommended. Sessions go to the trash first and can be restored; purging asks again.',
     modeArchive: 'Archive only',
     modeArchiveHint: 'Hides the session from the sidebar without touching the log; unarchive from the session list.',
+    modeDelete: 'Delete permanently',
+    modeDeleteHint: 'Removes the log, cache and index at once; cannot be undone.',
+    deleteModeHint: 'What the list Delete action does: move to trash (restorable) by default; permanent delete asks first.',
     confirmPurgeLabel: 'Confirm before permanent delete',
-    confirmPurgeHint: 'When off, permanent deletion happens without a dialog. Use with care.',
+    confirmPurgeHint: 'When off, permanent deletes (from the list or the trash) happen without a dialog. Use with care.',
     entryVisible: 'Show sidebar entry',
     entryVisibleHint: 'Hide the DSH Keeper icon at the sidebar foot; the settings page stays available.',
     resetSettings: 'Reset to defaults',
@@ -2752,7 +2770,8 @@ function MainPanel(props) {
     bridge.applyHide([...hidden], panels);
   }, [hidden, panels, tick]);
 
-  const settings = boot?.state?.settings ?? { defaultDeleteMode: 'trash', confirmPurge: true };
+  const settings = boot?.state?.settings ?? { deleteMode: 'trash', confirmPurge: true };
+  const deleteMode = settings.deleteMode === 'delete' ? 'delete' : 'trash';
 
   const sessions = React.useMemo(() => {
     const out = [];
@@ -2774,6 +2793,10 @@ function MainPanel(props) {
 
   const trash = boot?.trash ?? [];
   const trashSize = trash.reduce((sum, entry) => sum + (Number(entry.sizeBytes) || 0), 0);
+
+  const listDeleteMode = settings.deleteMode === 'delete' ? 'delete' : 'trash';
+  const listDeleteLabel = listDeleteMode === 'delete' ? t('deleteSession') : t('moveToTrash');
+  const listDeleteHint = listDeleteMode === 'delete' ? t('deleteSessionHint') : t('trashSessionHint');
 
   // Status filter mirrors the plugin manager: one chip narrows the list without
   // changing which sessions exist, so bulk actions stay scoped to the filter.
@@ -2885,23 +2908,57 @@ function MainPanel(props) {
     }
   };
 
-  const trashSessions = (ids) =>
-    run(async () => {
-      const result = await bridge.api('deleteSessions', { sessionIds: ids, mode: 'trash' });
-      const done = (result?.done ?? []).filter((item) => !item.detachedOnly).map((item) => item.sessionId);
-      const errors = result?.errors ?? [];
-      setSelected(new Set());
-      if (errors.length > 0) {
-        setToast({ text: errors[0].message });
+  const deleteSessionsFromList = (ids) => {
+    const mode = settings.deleteMode === 'delete' ? 'delete' : 'trash';
+    const rows = sessions.filter((session) => ids.includes(session.id));
+    const size = rows.reduce((sum, session) => sum + (Number(session.sizeBytes) || 0), 0);
+
+    if (mode === 'trash') {
+      void run(async () => {
+        const result = await bridge.api('deleteSessions', { sessionIds: ids, mode: 'trash' });
+        const done = (result?.done ?? []).map((item) => item.sessionId);
+        const errors = result?.errors ?? [];
+        setSelected(new Set());
+        if (errors.length > 0) return errors[0].message;
+        if (done.length === 0) return '';
+        setToast({
+          text: t('movedToTrash').replace('{n}', String(done.length)),
+          undoValue: { kind: 'restore', ids: done },
+        });
         return '';
-      }
-      if (done.length === 0) return '';
-      setToast({
-        text: t('movedToTrash').replace('{n}', String(done.length)),
-        undoValue: { kind: 'restore', ids: done },
       });
-      return '';
+      return;
+    }
+
+    const runDelete = () =>
+      run(async () => {
+        const result = await bridge.api('deleteSessionsPermanently', { sessionIds: ids });
+        const done = (result?.done ?? []).map((item) => item.sessionId);
+        const errors = result?.errors ?? [];
+        setSelected(new Set());
+        if (errors.length > 0) {
+          setToast({ text: errors[0].message });
+          return '';
+        }
+        if (done.length === 0) return '';
+        return t('deletedMsg').replace('{n}', String(done.length));
+      });
+    if (!settings.confirmPurge) {
+      void runDelete();
+      return;
+    }
+    setConfirm({
+      title: t('confirmDeleteTitle'),
+      body: t('confirmDeleteBody')
+        .replace('{n}', String(rows.length || ids.length))
+        .replace('{size}', fmtBytes(size)),
+      danger: true,
+      onConfirm: async () => {
+        setConfirm(null);
+        await runDelete();
+      },
     });
+  };
 
   const archiveSessions = (ids) =>
     run(async () => {
@@ -3374,16 +3431,16 @@ function MainPanel(props) {
             ),
         React.createElement(
           Tip,
-          { text: session.running ? t('runningHint') : t('trashSessionHint') },
+          { text: session.running ? t('runningHint') : listDeleteHint },
           React.createElement(
             'button',
             {
               type: 'button',
               className: 'ss-iconbtn',
               disabled: busy || session.running,
-              onClick: () => trashSessions([session.id]),
+              onClick: () => deleteSessionsFromList([session.id]),
             },
-            t('moveToTrash'),
+            listDeleteLabel,
           ),
         ),
         React.createElement(
@@ -3522,8 +3579,8 @@ function MainPanel(props) {
               ),
               React.createElement(
                 Tip,
-                { text: t('trashSessionHint') },
-                React.createElement('button', { type: 'button', className: 'ss-btn tiny', disabled: busy, onClick: () => trashSessions([...selected]) }, t('moveToTrash')),
+                { text: listDeleteHint },
+                React.createElement('button', { type: 'button', className: 'ss-btn tiny', disabled: busy, onClick: () => deleteSessionsFromList([...selected]) }, listDeleteLabel),
               ),
             )
           : React.createElement(
@@ -4222,12 +4279,12 @@ function MainPanel(props) {
   const canTogglePlugin = (item) => Boolean(item && item.entryId && !item.readOnlyReason && !isSelfEntry(item));
 
   const canUninstallPlugin = (item) => Boolean(
-    item && item.bundle && item.removable === true && item.bundle !== 'dsh-keeper' && item.bundle !== LEGACY_BUNDLE,
+    item && item.bundle && item.removable === true && !isSelfEntry(item) && !SELF_BUNDLES.has(item.bundle),
   );
 
   const uninstallReason = (item) => {
     if (!item) return t('uninstallLockedBuiltin');
-    if (isSelfEntry(item) || item.bundle === 'dsh-keeper' || item.bundle === LEGACY_BUNDLE) return t('uninstallLockedSelf');
+    if (isSelfEntry(item) || SELF_BUNDLES.has(item.bundle)) return t('uninstallLockedSelf');
     if (!item.bundle) return t('uninstallLockedNoBundle');
     return t('uninstallLockedManaged');
   };
@@ -4237,7 +4294,7 @@ function MainPanel(props) {
     if (canUninstallPlugin(item)) return t('panelYes');
     const short = !item
       ? t('uninstallLockedBuiltinShort')
-      : isSelfEntry(item) || item.bundle === 'dsh-keeper' || item.bundle === LEGACY_BUNDLE
+      : isSelfEntry(item) || SELF_BUNDLES.has(item.bundle)
         ? t('uninstallLockedSelfShort')
         : !item.bundle
           ? t('uninstallLockedNoBundleShort')
@@ -5648,10 +5705,11 @@ function SettingsPage(props) {
     return () => clearTimeout(timer);
   }, [toast]);
 
-  const settings = boot?.state?.settings ?? { defaultDeleteMode: 'trash', confirmPurge: true };
+  const settings = boot?.state?.settings ?? { deleteMode: 'trash', confirmPurge: true };
+  const deleteMode = settings.deleteMode === 'delete' ? 'delete' : 'trash';
   const hidden = new Set(boot?.state?.hiddenPanels ?? []);
   const paths = boot?.paths ?? {};
-  const version = boot?.version ?? '0.1.3';
+  const version = boot?.version ?? '0.1.4';
   const trashCount = Array.isArray(boot?.trash) ? boot.trash.length : 0;
 
   const call = async (work, message) => {
@@ -5672,7 +5730,6 @@ function SettingsPage(props) {
       await bridge.api('saveSettings', { settings: patch });
     }, t('settingsSaved'));
 
-  const setDeleteMode = (mode) => saveSettings({ defaultDeleteMode: mode });
   const setConfirmPurge = (value) => saveSettings({ confirmPurge: value });
 
   const exportFormatOptions = [
@@ -5759,33 +5816,26 @@ function SettingsPage(props) {
             null,
             field(
               t('defaultDeleteMode'),
-              t(settings.defaultDeleteMode === 'archive' ? 'modeArchiveHint' : 'modeTrashHint'),
+              t('deleteModeHint'),
               React.createElement(
                 'div',
                 { className: 'ss-radios' },
-                React.createElement(
-                  'label',
-                  { className: 'ss-radio' },
-                  React.createElement('input', {
-                    type: 'radio',
-                    name: 'ss-delete-mode',
-                    checked: settings.defaultDeleteMode !== 'archive',
-                    disabled: busy,
-                    onChange: () => setDeleteMode('trash'),
-                  }),
-                  t('modeTrash'),
-                ),
-                React.createElement(
-                  'label',
-                  { className: 'ss-radio' },
-                  React.createElement('input', {
-                    type: 'radio',
-                    name: 'ss-delete-mode',
-                    checked: settings.defaultDeleteMode === 'archive',
-                    disabled: busy,
-                    onChange: () => setDeleteMode('archive'),
-                  }),
-                  t('modeArchive'),
+                [
+                  { id: 'trash', label: t('modeTrash') },
+                  { id: 'delete', label: t('modeDelete') },
+                ].map((option) =>
+                  React.createElement(
+                    'label',
+                    { className: 'ss-radio', key: option.id },
+                    React.createElement('input', {
+                      type: 'radio',
+                      name: 'ss-delete-mode',
+                      checked: deleteMode === option.id,
+                      disabled: busy,
+                      onChange: () => saveSettings({ deleteMode: option.id }),
+                    }),
+                    option.label,
+                  ),
                 ),
               ),
             ),
