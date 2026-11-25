@@ -2,6 +2,13 @@
 
 DSH 管家（`dsh-keeper-plugin`）的版本变更记录。格式参考 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)，版本号遵循 [SemVer](https://semver.org/lang/zh-CN/)。
 
+## [0.1.5] - 2026-11-25
+
+### 变更
+
+- README 的「更新日志」小节改为按版本分节（新增 / 变更 / 修复）。
+- CHANGELOG.md 所有版本统一为相同结构，并移除 README 中重复的 CHANGELOG 链接。
+
 ## [0.1.4] - 2026-11-25
 
 ### 新增

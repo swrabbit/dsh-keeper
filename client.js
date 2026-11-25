@@ -5709,7 +5709,7 @@ function SettingsPage(props) {
   const deleteMode = settings.deleteMode === 'delete' ? 'delete' : 'trash';
   const hidden = new Set(boot?.state?.hiddenPanels ?? []);
   const paths = boot?.paths ?? {};
-  const version = boot?.version ?? '0.1.4';
+  const version = boot?.version ?? '0.1.5';
   const trashCount = Array.isArray(boot?.trash) ? boot.trash.length : 0;
 
   const call = async (work, message) => {
