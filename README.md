@@ -166,6 +166,14 @@ node .dsh-keeper-dev/test-client.mjs
 node .dsh-keeper-dev/test-expand.mjs
 ```
 
+## 更新日志
+
+每个版本的变更见 [CHANGELOG.md](https://github.com/swrabbit/dsh-keeper/blob/main/CHANGELOG.md)。
+
+- **0.1.4**（2026-11-25）：修复插件自身可被卸载的问题；列表「删除会话」改为设置项二选一（默认移入回收站、可恢复；永久删除会清理日志、缓存与索引）。
+- **0.1.3**（2026-11-14）：放宽 DSH 版本要求至 `>=0.2.2-rc.1`。
+- 更早版本见 [GitHub Releases](https://github.com/swrabbit/dsh-keeper/releases)。
+
 ## 反馈
 
 - Issue：<https://github.com/swrabbit/dsh-keeper/issues>
