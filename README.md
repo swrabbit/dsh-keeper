@@ -170,9 +170,29 @@ node .dsh-keeper-dev/test-expand.mjs
 
 每个版本的变更见 [CHANGELOG.md](https://github.com/swrabbit/dsh-keeper/blob/main/CHANGELOG.md)。
 
-- **0.1.4**（2026-11-25）：修复插件自身可被卸载的问题；列表「删除会话」改为设置项二选一（默认移入回收站、可恢复；永久删除会清理日志、缓存与索引）。
-- **0.1.3**（2026-11-14）：放宽 DSH 版本要求至 `>=0.2.2-rc.1`。
-- 更早版本见 [GitHub Releases](https://github.com/swrabbit/dsh-keeper/releases)。
+### 0.1.4 - 2026-11-25
+
+#### 新增
+
+- 设置页新增「删除会话行为」二选一：`移入回收站`（默认，可恢复）或 `永久删除`；列表里的「删除会话」按钮按此设置执行。
+- 永久删除模式下，列表删除会先弹二次确认（可在设置中关闭确认）。
+
+#### 变更
+
+- 回收站的「彻底删除」和「清空回收站」补齐与永久删除相同的清理：会话日志目录、官方投影缓存、spill 目录、工作区挂载、归档/置顶标记与索引记录，并广播 `api-session/removed` 事件。
+- 永久删除会级联删除 `origin: "subagent"` 且 `parentSession` 指向该会话的子会话；fork 会话不级联。
+
+#### 修复
+
+- 修复 DSH 管家自身在「插件管理」中可被卸载的问题。
+
+### 0.1.3 - 2026-11-14
+
+#### 变更
+
+- 放宽 DSH 版本要求为 `engines.dsh: ">=0.2.2-rc.1"`；0.3 及之后未逐版验证。
+
+更早版本见 [CHANGELOG.md](https://github.com/swrabbit/dsh-keeper/blob/main/CHANGELOG.md) 与 [GitHub Releases](https://github.com/swrabbit/dsh-keeper/releases)。
 
 ## 反馈
 
