@@ -62,6 +62,13 @@ const NOTIFY_DEFAULTS = {
   volume: 100,
   sounds: { normal: { name: '' }, interrupt: { name: '' } },
   openOnClick: true,
+  // Quiet hours (DND): within the local-time window banners and tones are
+  // held back, but the notification center still records the entry.
+  quiet: { enabled: false, start: '22:00', end: '08:00' },
+  // Mute completion reminders only; failures and pending questions still pass.
+  muteDone: false,
+  // Workspace ids whose notifications are held back (history unaffected).
+  mutedWorkspaces: [],
 };
 
 const DEFAULT_SETTINGS = {
@@ -83,6 +90,11 @@ function normalizeNotifyLastChannels(value, fallback) {
   if (banner || sound) return { banner, sound };
   if (fallback.banner || fallback.sound) return { banner: fallback.banner, sound: fallback.sound };
   return { banner: true, sound: true };
+}
+
+function normalizeClock(value, fallback) {
+  const match = /^([01]\d|2[0-3]):([0-5]\d)$/.exec(typeof value === 'string' ? value.trim() : '');
+  return match ? `${match[1]}:${match[2]}` : fallback;
 }
 
 function normalizeNotificationSettings(value) {
@@ -120,6 +132,15 @@ function normalizeNotificationSettings(value) {
     lastChannels,
     volume: Number.isFinite(volume) ? Math.max(0, Math.min(100, Math.round(volume))) : 100,
     sounds,
+    quiet: {
+      enabled: raw.quiet?.enabled === true,
+      start: normalizeClock(raw.quiet?.start, '22:00'),
+      end: normalizeClock(raw.quiet?.end, '08:00'),
+    },
+    muteDone: raw.muteDone === true,
+    mutedWorkspaces: Array.isArray(raw.mutedWorkspaces)
+      ? raw.mutedWorkspaces.filter((id) => typeof id === 'string' && id).slice(0, 100)
+      : [],
     openOnClick: raw.openOnClick !== false,
   };
 }
@@ -2274,12 +2295,14 @@ function pushNotification(ctx, entry) {
   const rawSummary =
     entry.summary || (entry.kind === 'error' ? entry.detail : '') || meta.summary || '';
   const summary = truncate(stripMarkdown(String(rawSummary)), 100);
+  const owner = sessionId ? workspaceContaining(ctx, sessionId) : null;
   const notification = {
     id: String(notificationSeq),
     kind: entry.kind,
     sessionId,
     title: meta.title,
     workspace: meta.workspace,
+    workspaceId: owner?.id ?? '',
     model: meta.model,
     summary,
     detail: entry.detail ?? '',
@@ -2311,6 +2334,10 @@ function readNotifications(ctx, payload) {
   // model is available, so fill the gaps the first time it is read.
   for (const item of items) {
     if (!item.sessionId) continue;
+    if (!item.workspaceId) {
+      const owner = workspaceContaining(ctx, item.sessionId);
+      if (owner) item.workspaceId = owner.id;
+    }
     if (item.title && item.workspace && item.model && item.summary) continue;
     const meta = notificationMeta(ctx, null, item.sessionId);
     if (!item.title && meta.title) item.title = meta.title;

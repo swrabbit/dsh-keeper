@@ -120,6 +120,23 @@ const DICT = {
     notifyAskGenericBody: '请返回 DSH 继续。',
     notifyUntitled: '未命名会话',
     notifyEmpty: '暂时没有新的提醒。',
+    notifyCenter: '通知中心',
+    notifyCenterEmpty: '还没有通知记录。任务结束、失败或等待输入时会出现在这里。',
+    notifyCenterHint: '记录只保存在本机；点击条目可打开对应会话。',
+    notifyMarkAllRead: '全部标为已读',
+    notifyClearHistory: '清空记录',
+    notifyUnreadN: '{n} 条未读',
+    notifyMutedTag: '已静音',
+    quietTitle: '静音规则',
+    quietEnabled: '启用免打扰时段',
+    quietEnabledHint: '每天在设定时段内不弹桌面横幅、不播放提示音；提醒仍会记入通知中心，可随时回看。开始时间晚于结束时间表示跨天（如 22:00–08:00）。',
+    quietStart: '开始时间',
+    quietEnd: '结束时间',
+    muteDone: '静音「任务完成」提醒',
+    muteDoneHint: '只静音「任务完成」这一类提醒，通知中心仍会记录；「失败/异常打断」「等待操作」不受影响，照常提醒。适合长任务跑完不想被打断、但出问题仍要知道的场景。',
+    muteWorkspaces: '按工作区静音',
+    muteWorkspacesHint: '勾选的工作区里产生的提醒只写入通知中心，不弹横幅、不响提示音；未勾选的工作区不受影响。适合把某个工作区当作后台批量处理时使用。',
+    noWorkspaces: '还没有工作区。',
     searchPlaceholder: '搜索会话标题、工作区…',
     sortUpdated: '按最近活动',
     sortSize: '按占用大小',
@@ -449,6 +466,23 @@ const DICT = {
     notifyAskGenericBody: 'Return to DSH to continue.',
     notifyUntitled: 'Untitled session',
     notifyEmpty: 'No new notifications yet.',
+    notifyCenter: 'Notification center',
+    notifyCenterEmpty: 'No notifications yet. Task completions, failures and pending inputs will appear here.',
+    notifyCenterHint: 'History stays on this machine; click an entry to open its session.',
+    notifyMarkAllRead: 'Mark all as read',
+    notifyClearHistory: 'Clear history',
+    notifyUnreadN: '{n} unread',
+    notifyMutedTag: 'Muted',
+    quietTitle: 'Quiet rules',
+    quietEnabled: 'Enable quiet hours',
+    quietEnabledHint: 'No banners or tones during this window each day; notifications still go to the Notification center. A start later than the end means the window crosses midnight (e.g. 22:00–08:00).',
+    quietStart: 'Start',
+    quietEnd: 'End',
+    muteDone: 'Mute task-completion reminders',
+    muteDoneHint: 'Mutes only "task completed" reminders; the Notification center still records them. Failures/interruptions and pending inputs still notify. Useful when you do not want to be interrupted by long runs but still need to know about problems.',
+    muteWorkspaces: 'Mute by workspace',
+    muteWorkspacesHint: 'Notifications from the selected workspaces go only to the Notification center, without banners or tones; other workspaces are unaffected. Useful when a workspace runs background batches.',
+    noWorkspaces: 'No workspaces yet.',
     searchPlaceholder: 'Search sessions or workspaces…',
     sortUpdated: 'Last activity',
     sortSize: 'Size',
@@ -932,6 +966,8 @@ body[data-ds-dark-theme] .ss-rank-3{color:#ecc94b}
 .ss-field:last-child{border-bottom:none}
 .ss-field:first-of-type{padding-top:2px}
 .ss-fieldlabel{font-size:12px;color:var(--dsw-alias-label-primary)}
+.ss-fieldicon{display:inline-flex;align-items:center;gap:6px}
+.ss-fieldicon svg{flex:none;opacity:.8}
 .ss-fieldlabel small{display:block;color:var(--dsw-alias-label-secondary);font-size:11px;margin-top:3px;max-width:520px;line-height:1.55}
 .ss-radios{display:flex;flex-direction:column;gap:6px}
 .ss-radio{display:flex;align-items:center;gap:8px;font-size:12px;cursor:pointer;color:var(--dsw-alias-label-primary)}
@@ -1028,6 +1064,8 @@ body[data-ds-dark-theme] .ss-rank-3{color:#ecc94b}
 .ss-settings .ss-card{background:transparent;border:0;border-radius:0;padding:4px 0 0;margin:6px 0 0}
 .ss-settings .ss-card h4{font-size:13px;font-weight:600;letter-spacing:0;text-transform:none;margin:0 0 8px;color:var(--dsw-alias-label-secondary)}
 .ss-settings .ss-notifycard h4{font-size:14px;font-weight:600;color:var(--dsw-alias-label-primary)}
+.ss-notifycount{color:var(--dsw-alias-label-secondary)}
+.ss-notifycount b{color:var(--dsw-alias-state-business-primary);font-weight:600;font-variant-numeric:tabular-nums}
 .ss-settings .ss-kpis{font-size:13px;line-height:22px;gap:10px}
 .ss-settings .ss-kpis b{font-weight:600}
 .ss-notifyactions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:12px}
@@ -1038,9 +1076,39 @@ body[data-ds-dark-theme] .ss-rank-3{color:#ecc94b}
 .ss-notifycard .ss-hint{color:var(--dsw-alias-label-tertiary)}
 .ss-notifyfooter{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:16px 0 6px}
 .ss-notifyintro{margin:0 0 10px}
+.ss-notifylog{display:flex;flex-direction:column;gap:4px;margin-top:10px;max-height:300px;overflow:auto}
+.ss-notifylogempty{margin-top:10px;opacity:.6}
+.ss-notifylogrow{display:flex;align-items:flex-start;gap:10px;width:100%;text-align:left;padding:8px 10px;border:1px solid transparent;border-radius:8px;background:transparent;color:var(--dsw-alias-label-primary);cursor:pointer;font:inherit;box-sizing:border-box}
+.ss-notifylogrow:hover{background:var(--dsw-alias-bg-layer-1)}
+.ss-notifylogrow.unread{background:var(--dsw-alias-bg-layer-2)}
+.ss-notifylogrow:not(.unread){border-color:var(--dsw-alias-border-l1);background:transparent}
+.ss-notifylogrow:not(.unread):hover{background:var(--dsw-alias-bg-layer-1)}
+.ss-notifylogrow.unread .ss-notifylogtitle{font-weight:600}
+.ss-notifylogrow:not(.unread) .ss-notifylogtitle{color:var(--dsw-alias-label-tertiary);font-weight:400}
+.ss-notifylogrow:not(.unread) .ss-notifylogkind,
+.ss-notifylogrow:not(.unread) .ss-notifylogws,
+.ss-notifylogrow:not(.unread) .ss-notifylogsum,
+.ss-notifylogrow:not(.unread) .ss-notifylogtime{opacity:.6}
+.ss-notifylogkind{flex:none;min-width:48px;font-size:12px;line-height:18px;color:var(--dsw-alias-label-tertiary)}
+.ss-notifylogbody{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}
+.ss-notifylogtitle{font-size:13px;line-height:19px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ss-notifylogws,.ss-notifylogsum,.ss-notifylogtime{font-size:12px;line-height:18px;color:var(--dsw-alias-label-tertiary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ss-notifylogtime{flex:none;margin-left:auto}
+.ss-notifylogmuted{align-self:center}
+.ss-notifytimes{display:flex;gap:20px;padding:8px 12px;margin-top:2px;border-radius:8px;background:var(--dsw-alias-bg-layer-2);width:fit-content;max-width:100%}
+.ss-notifytime{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--dsw-alias-label-secondary)}
+.ss-notifytime input[type=time]{height:28px;padding:0 8px;border-radius:6px;border:1px solid var(--dsw-alias-border-l2);background:var(--dsw-alias-bg-layer-1);color:var(--dsw-alias-label-primary);font:inherit}
+.ss-notifytime input[type=time]:focus{outline:none;border-color:var(--dsw-alias-brand-primary);box-shadow:0 0 0 var(--dsw-focus-ring-width) var(--dsw-focus-ring-color)}
+.ss-mutelist{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:6px}
+.ss-quietcard .ss-field{padding:14px 0}
+.ss-quietcard .ss-field:first-of-type{padding-top:2px}
+.ss-quietcard .ss-fieldlabel small{margin-top:5px}
+.ss-quiettimesep{height:0;border-top:1px solid var(--dsw-alias-border-l1);margin-top:8px}
+.ss-muteworkspace{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--dsw-alias-label-primary);cursor:pointer}
+.ss-muteworkspace input{width:14px;height:14px;accent-color:var(--dsw-alias-brand-primary);cursor:pointer}
 .ss-channelrow{display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:6px 0 6px 14px;border-left:1px solid var(--dsw-alias-border-l2)}
 .ss-channel{display:flex;align-items:center;gap:10px}
-.ss-channellabel{font-size:12px;line-height:20px;color:var(--dsw-alias-label-secondary)}
+.ss-channellabel{display:inline-flex;align-items:center;gap:6px;font-size:12px;line-height:20px;color:var(--dsw-alias-label-secondary)}
 .ss-volumewrap{display:flex;align-items:center;gap:10px;min-width:230px}
 .ss-volumerange{flex:1;min-width:120px;accent-color:var(--dsw-alias-brand-primary);cursor:pointer}
 .ss-volumenum{width:64px;height:28px;padding:0 8px;text-align:right;font-size:12px;border-radius:6px;border:1px solid var(--dsw-alias-border-l2);background:var(--dsw-alias-bg-layer-1);color:var(--dsw-alias-label-primary);box-sizing:border-box}
@@ -1229,6 +1297,307 @@ function ArrowUpIcon(props) {
 }
 
 /** Gear shown on the header's settings shortcut. */
+/** Quiet hours: a crescent moon. */
+function MoonIcon(props) {
+  const size = Number(props?.size) || 15;
+  return React.createElement(
+    'svg',
+    {
+      width: size,
+      height: size,
+      viewBox: '0 0 24 24',
+      fill: 'none',
+      stroke: 'currentColor',
+      strokeWidth: 1.8,
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      className: props?.className,
+      'aria-hidden': 'true',
+    },
+    React.createElement('path', { d: 'M20.7 13.1A8.6 8.6 0 1 1 10.9 3.3a6.7 6.7 0 0 0 9.8 9.8Z' }),
+  );
+}
+
+/** Mute one reminder type: a bell with a slash. */
+function BellOffIcon(props) {
+  const size = Number(props?.size) || 15;
+  return React.createElement(
+    'svg',
+    {
+      width: size,
+      height: size,
+      viewBox: '0 0 24 24',
+      fill: 'none',
+      stroke: 'currentColor',
+      strokeWidth: 1.8,
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      className: props?.className,
+      'aria-hidden': 'true',
+    },
+    React.createElement('path', { d: 'M8.7 3.4A6 6 0 0 1 18 8.6c0 3.3.7 5.4 1.4 6.5' }),
+    React.createElement('path', { d: 'M17 17H4.6a2 2 0 0 1-1.4-3.4A2 2 0 0 0 3.7 12V8.6a6 6 0 0 1 .6-2.6' }),
+    React.createElement('path', { d: 'M3 3l18 18' }),
+    React.createElement('path', { d: 'M10.3 21a2 2 0 0 0 3.4 0' }),
+  );
+}
+
+/** Mute one workspace: a folder with a slash. */
+function FolderOffIcon(props) {
+  const size = Number(props?.size) || 15;
+  return React.createElement(
+    'svg',
+    {
+      width: size,
+      height: size,
+      viewBox: '0 0 24 24',
+      fill: 'none',
+      stroke: 'currentColor',
+      strokeWidth: 1.8,
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      className: props?.className,
+      'aria-hidden': 'true',
+    },
+    React.createElement('path', {
+      d: 'M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.7-.9L9.6 3.9A2 2 0 0 0 7.9 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z',
+    }),
+    React.createElement('path', { d: 'M2 2l20 20' }),
+  );
+}
+
+/** Notification master switch: a bell. */
+function BellIcon(props) {
+  const size = Number(props?.size) || 15;
+  return React.createElement(
+    'svg',
+    {
+      width: size,
+      height: size,
+      viewBox: '0 0 24 24',
+      fill: 'none',
+      stroke: 'currentColor',
+      strokeWidth: 1.8,
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      className: props?.className,
+      'aria-hidden': 'true',
+    },
+    React.createElement('path', {
+      d: 'M18 8.6a6 6 0 0 0-12 0c0 3.4-.7 5.5-1.4 6.6a1 1 0 0 0 .9 1.5h13a1 1 0 0 0 .9-1.5c-.7-1.1-1.4-3.2-1.4-6.6Z',
+    }),
+    React.createElement('path', { d: 'M10.3 21a2 2 0 0 0 3.4 0' }),
+  );
+}
+
+/** Banner channel: a desktop window. */
+function BannerIcon(props) {
+  const size = Number(props?.size) || 15;
+  return React.createElement(
+    'svg',
+    {
+      width: size,
+      height: size,
+      viewBox: '0 0 24 24',
+      fill: 'none',
+      stroke: 'currentColor',
+      strokeWidth: 1.8,
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      className: props?.className,
+      'aria-hidden': 'true',
+    },
+    React.createElement('rect', { x: 3, y: 5, width: 18, height: 13, rx: 2 }),
+    React.createElement('path', { d: 'M3 9h18' }),
+  );
+}
+
+/** Sound channel / volume: a speaker. */
+function SpeakerIcon(props) {
+  const size = Number(props?.size) || 16;
+  return React.createElement(
+    'svg',
+    {
+      width: size,
+      height: size,
+      viewBox: '0 0 24 24',
+      fill: 'none',
+      stroke: 'currentColor',
+      strokeWidth: 1.8,
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      className: props?.className,
+      'aria-hidden': 'true',
+    },
+    React.createElement('path', { d: 'M3 9h4.2L12 5.6v12.8L7.2 15H3z' }),
+    React.createElement('path', { d: 'M15.6 8.7a5 5 0 0 1 0 6.6' }),
+    React.createElement('path', { d: 'M18 6.5a7.8 7.8 0 0 1 0 11' }),
+  );
+}
+
+/** Open the related session on click: an outbound arrow. */
+function ExternalLinkIcon(props) {
+  const size = Number(props?.size) || 15;
+  return React.createElement(
+    'svg',
+    {
+      width: size,
+      height: size,
+      viewBox: '0 0 24 24',
+      fill: 'none',
+      stroke: 'currentColor',
+      strokeWidth: 1.8,
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      className: props?.className,
+      'aria-hidden': 'true',
+    },
+    React.createElement('path', { d: 'M14 4h6v6' }),
+    React.createElement('path', { d: 'M20 4l-9 9' }),
+    React.createElement('path', { d: 'M18.5 13.5V18a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h4.5' }),
+  );
+}
+
+/** Delete / trash actions. */
+function TrashIcon(props) {
+  const size = Number(props?.size) || 15;
+  return React.createElement(
+    'svg',
+    {
+      width: size,
+      height: size,
+      viewBox: '0 0 24 24',
+      fill: 'none',
+      stroke: 'currentColor',
+      strokeWidth: 1.8,
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      className: props?.className,
+      'aria-hidden': 'true',
+    },
+    React.createElement('path', { d: 'M4 6h16' }),
+    React.createElement('path', { d: 'M9.5 6V4.5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1V6' }),
+    React.createElement('path', { d: 'M6.5 6l.9 13.1a1.5 1.5 0 0 0 1.5 1.4h6.2a1.5 1.5 0 0 0 1.5-1.4L17.5 6' }),
+    React.createElement('path', { d: 'M10 11v5M14 11v5' }),
+  );
+}
+
+/** Safety guards such as the purge confirmation. */
+function ShieldIcon(props) {
+  const size = Number(props?.size) || 15;
+  return React.createElement(
+    'svg',
+    {
+      width: size,
+      height: size,
+      viewBox: '0 0 24 24',
+      fill: 'none',
+      stroke: 'currentColor',
+      strokeWidth: 1.8,
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      className: props?.className,
+      'aria-hidden': 'true',
+    },
+    React.createElement('path', { d: 'M12 3l7 3v5.2c0 4.4-3 7.7-7 9.8-4-2.1-7-5.4-7-9.8V6z' }),
+    React.createElement('path', { d: 'M9 11.6l2.1 2.1 4-4' }),
+  );
+}
+
+/** Sidebar entry visibility. */
+function SidebarIcon(props) {
+  const size = Number(props?.size) || 15;
+  return React.createElement(
+    'svg',
+    {
+      width: size,
+      height: size,
+      viewBox: '0 0 24 24',
+      fill: 'none',
+      stroke: 'currentColor',
+      strokeWidth: 1.8,
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      className: props?.className,
+      'aria-hidden': 'true',
+    },
+    React.createElement('rect', { x: 3, y: 4.5, width: 18, height: 15, rx: 2 }),
+    React.createElement('path', { d: 'M9 4.5v15' }),
+  );
+}
+
+/** Default export format: a file with a download arrow. */
+function ExportFileIcon(props) {
+  const size = Number(props?.size) || 15;
+  return React.createElement(
+    'svg',
+    {
+      width: size,
+      height: size,
+      viewBox: '0 0 24 24',
+      fill: 'none',
+      stroke: 'currentColor',
+      strokeWidth: 1.8,
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      className: props?.className,
+      'aria-hidden': 'true',
+    },
+    React.createElement('path', { d: 'M13 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V9z' }),
+    React.createElement('path', { d: 'M13 3v6h6' }),
+    React.createElement('path', { d: 'M12 12.5v5.5M9.5 15.5L12 18l2.5-2.5' }),
+  );
+}
+
+/** Clear-cache style actions: an eraser. */
+function EraserIcon(props) {
+  const size = Number(props?.size) || 15;
+  return React.createElement(
+    'svg',
+    {
+      width: size,
+      height: size,
+      viewBox: '0 0 24 24',
+      fill: 'none',
+      stroke: 'currentColor',
+      strokeWidth: 1.8,
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      className: props?.className,
+      'aria-hidden': 'true',
+    },
+    React.createElement('path', { d: 'M5 19.5h14' }),
+    React.createElement('path', { d: 'M7 18l-3-3a1.5 1.5 0 0 1 0-2.1l8-8a1.5 1.5 0 0 1 2.1 0l4 4a1.5 1.5 0 0 1 0 2.1l-7 7z' }),
+    React.createElement('path', { d: 'M9.5 6.5l8 8' }),
+  );
+}
+
+/** Open the data directory: a folder. */
+function FolderIcon(props) {
+  const size = Number(props?.size) || 15;
+  return React.createElement(
+    'svg',
+    {
+      width: size,
+      height: size,
+      viewBox: '0 0 24 24',
+      fill: 'none',
+      stroke: 'currentColor',
+      strokeWidth: 1.8,
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      className: props?.className,
+      'aria-hidden': 'true',
+    },
+    React.createElement('path', { d: 'M3 7a2 2 0 0 1 2-2h4.2l2 2H19a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z' }),
+  );
+}
+
+/** Label with a leading icon, matching the quiet-rules rows. */
+function iconLabel(icon, text) {
+  return React.createElement('span', { className: 'ss-fieldicon' }, icon, text);
+}
+
 function GearIcon(props) {
   const size = Number(props?.size) || 16;
   return React.createElement(
@@ -1893,6 +2262,11 @@ function normalizeNotifyLastChannels(value, fallback) {
   return { banner: true, sound: true };
 }
 
+function normalizeNotifyClock(value, fallback) {
+  const match = /^([01]\d|2[0-3]):([0-5]\d)$/.exec(typeof value === 'string' ? value.trim() : '');
+  return match ? `${match[1]}:${match[2]}` : fallback;
+}
+
 function normalizeNotifySettings(value) {
   const raw = value && typeof value === 'object' ? value : {};
   const volume = Number(raw.volume);
@@ -1931,12 +2305,97 @@ function normalizeNotifySettings(value) {
     lastChannels,
     volume: Number.isFinite(volume) ? Math.max(0, Math.min(100, Math.round(volume))) : 100,
     sounds,
+    quiet: {
+      enabled: raw.quiet?.enabled === true,
+      start: normalizeNotifyClock(raw.quiet?.start, '22:00'),
+      end: normalizeNotifyClock(raw.quiet?.end, '08:00'),
+    },
+    muteDone: raw.muteDone === true,
+    mutedWorkspaces: Array.isArray(raw.mutedWorkspaces)
+      ? raw.mutedWorkspaces.filter((id) => typeof id === 'string' && id).slice(0, 100)
+      : [],
     openOnClick: raw.openOnClick !== false,
   };
 }
 
 function notifySettingsAreDefault(value) {
   return JSON.stringify(normalizeNotifySettings(value)) === JSON.stringify(normalizeNotifySettings(null));
+}
+
+/* ------------------------------------------------- notification center log */
+
+// Local history for the notification center. Bounded and stored in the webview
+// localStorage so it survives page reloads without touching the host state.
+const NOTIFY_LOG_KEY = 'dsh-keeper:notify-log';
+const NOTIFY_LOG_LIMIT = 200;
+
+function readNotifyLog() {
+  try {
+    if (typeof window === 'undefined' || !window.localStorage) return [];
+    const raw = window.localStorage.getItem(NOTIFY_LOG_KEY);
+    const list = raw ? JSON.parse(raw) : [];
+    return Array.isArray(list) ? list : [];
+  } catch (error) {
+    return [];
+  }
+}
+
+function publishNotifyLog(list) {
+  try {
+    if (typeof window === 'undefined') return;
+    window.localStorage.setItem(NOTIFY_LOG_KEY, JSON.stringify(list));
+    window.dispatchEvent(new CustomEvent('dsh-keeper:notify-log', { detail: list }));
+  } catch (error) {
+    /* best effort */
+  }
+}
+
+function appendNotifyLog(entry) {
+  const list = readNotifyLog();
+  list.unshift(entry);
+  publishNotifyLog(list.slice(0, NOTIFY_LOG_LIMIT));
+}
+
+function markNotifyLogRead(ids) {
+  const wanted = ids ? new Set(ids.map(String)) : null;
+  const next = readNotifyLog().map((item) =>
+    wanted && !wanted.has(String(item.id)) ? item : { ...item, read: true },
+  );
+  publishNotifyLog(next);
+  return next;
+}
+
+function clearNotifyLog() {
+  publishNotifyLog([]);
+}
+
+function notifyUnreadCount(list) {
+  return (Array.isArray(list) ? list : []).filter((item) => item && item.read !== true).length;
+}
+
+function notifyClockMinutes(value) {
+  const match = /^([01]\d|2[0-3]):([0-5]\d)$/.exec(typeof value === 'string' ? value : '');
+  return match ? Number(match[1]) * 60 + Number(match[2]) : null;
+}
+
+/** Whether the local clock is inside the configured quiet-hours window. */
+function notifyQuietActive(quiet) {
+  if (!quiet || quiet.enabled !== true) return false;
+  const start = notifyClockMinutes(quiet.start);
+  const end = notifyClockMinutes(quiet.end);
+  if (start === null || end === null || start === end) return false;
+  const now = new Date();
+  const minutes = now.getHours() * 60 + now.getMinutes();
+  return start < end ? minutes >= start && minutes < end : minutes >= start || minutes < end;
+}
+
+/** History records everything; this decides whether a banner/tones are held. */
+function notifyItemMuted(item, settings) {
+  if (!item) return false;
+  if (settings.muteDone && item.kind === 'done') return true;
+  const muted = Array.isArray(settings.mutedWorkspaces) ? settings.mutedWorkspaces : [];
+  if (item.workspaceId && muted.includes(item.workspaceId)) return true;
+  return notifyQuietActive(settings.quiet);
 }
 
 function notifySoundGroup(kind) {
@@ -2310,6 +2769,9 @@ function startNotifier(bridge, t) {
   let seen = epoch !== '';
   let staleWarned = false;
   let pollCount = 0;
+  // Ids already written to the notification center, so a cursor reset or a
+  // replay after a host restart cannot duplicate rows.
+  const loggedIds = new Set();
   notifyDebug(bridge, 'notifier-start', {
     cursor,
     epoch,
@@ -2411,6 +2873,26 @@ function startNotifier(bridge, t) {
       for (const item of items) {
         if (!item || !item.id) continue;
         if (Number(item.id) > Number(newest)) newest = String(item.id);
+        // The notification center records every event; the mute rules below only
+        // decide whether this one also raises a banner or a tone.
+        const recordKey = String(item.id);
+        const muted = notifyItemMuted(item, settings);
+        if (!loggedIds.has(recordKey)) {
+          loggedIds.add(recordKey);
+          appendNotifyLog({
+            id: recordKey,
+            kind: String(item.kind || ''),
+            sessionId: String(item.sessionId || ''),
+            workspaceId: String(item.workspaceId || ''),
+            title: truncateNotifyText(item.title, 80),
+            workspace: truncateNotifyText(item.workspace, 60),
+            summary: truncateNotifyText(item.summary, 140),
+            at: Number(item.at) || Date.now(),
+            muted,
+            read: false,
+          });
+        }
+        if (muted) continue;
         if (!settings.enabled) continue;
         const kind = item.kind;
         if (kind === 'done' && !settings.onDone) continue;
@@ -2632,6 +3114,23 @@ function MainPanel(props) {
   const notifyFileRef = React.useRef(null);
   const pendingSoundGroupRef = React.useRef('normal');
   const notifySaveTimerRef = React.useRef(null);
+  const [notifyLog, setNotifyLog] = React.useState(() => readNotifyLog());
+
+  React.useEffect(() => {
+    const onLog = (event) => {
+      setNotifyLog(event && Array.isArray(event.detail) ? event.detail : readNotifyLog());
+    };
+    const onStorage = (event) => {
+      if (!event || event.key === NOTIFY_LOG_KEY) setNotifyLog(readNotifyLog());
+    };
+    window.addEventListener('dsh-keeper:notify-log', onLog);
+    window.addEventListener('storage', onStorage);
+    setNotifyLog(readNotifyLog());
+    return () => {
+      window.removeEventListener('dsh-keeper:notify-log', onLog);
+      window.removeEventListener('storage', onStorage);
+    };
+  }, []);
 
   const refresh = () => setReloadKey((key) => key + 1);
 
@@ -5188,6 +5687,7 @@ function MainPanel(props) {
     // The footer reset applies to the whole page, so it is only actionable once
     // at least one option differs from the defaults.
     const notifyDefaults = notifySettingsAreDefault(notifySettings);
+    const quiet = notifySettings.quiet || { enabled: false, start: '22:00', end: '08:00' };
     const row = (label, hint, control, style) =>
       React.createElement(
         'div',
@@ -5243,11 +5743,11 @@ function MainPanel(props) {
       );
     // Channel switches sit stacked at the right edge of the "提醒方式" row:
     // label on the left of each switch, both switches right-aligned together.
-    const channelSwitch = (checked, label, hint, onChange) =>
+    const channelSwitch = (checked, label, hint, onChange, icon) =>
       React.createElement(
         'div',
         { className: 'ss-channel' },
-        React.createElement('span', { className: 'ss-channellabel' }, label),
+        React.createElement('span', { className: 'ss-channellabel' }, icon || null, label),
         React.createElement(Switch, {
           checked,
           label,
@@ -5283,12 +5783,14 @@ function MainPanel(props) {
       t('notifyChannelBanner'),
       t('notifySystemHint'),
       (value) => setChannel('banner', value),
+      React.createElement(BannerIcon),
     );
     const soundChannel = channelSwitch(
       notifySettings.sound !== 'none',
       t('notifyChannelSound'),
       t('notifySoundHint'),
       (value) => setChannel('sound', value),
+      React.createElement(SpeakerIcon),
     );
     const soundRow = (group, label) => {
       const entry = notifySettings.sounds[group] || { name: '' };
@@ -5360,6 +5862,99 @@ function MainPanel(props) {
       React.createElement(
         'div',
         { className: 'ss-card ss-notifycard' },
+        React.createElement(
+          'h4',
+          null,
+          t('notifyCenter'),
+          notifyUnreadCount(notifyLog) > 0
+            ? React.createElement(
+                'span',
+                { className: 'ss-notifycount' },
+                ' · ',
+                t('notifyUnreadN').split('{n}')[0],
+                React.createElement('b', null, String(notifyUnreadCount(notifyLog))),
+                t('notifyUnreadN').split('{n}')[1],
+              )
+            : null,
+        ),
+        React.createElement('div', { className: 'ss-hint' }, t('notifyCenterHint')),
+        notifyLog.length === 0
+          ? React.createElement('div', { className: 'ss-hint ss-notifylogempty' }, t('notifyCenterEmpty'))
+          : React.createElement(
+              'div',
+              { className: 'ss-notifylog' },
+              notifyLog.slice(0, 30).map((item) =>
+                React.createElement(
+                  'button',
+                  {
+                    key: item.id,
+                    type: 'button',
+                    className: 'ss-notifylogrow' + (item.read === true ? '' : ' unread'),
+                    onClick: () => {
+                      markNotifyLogRead([item.id]);
+                      setNotifyLog(readNotifyLog());
+                      if (item.sessionId) openSessionSafe(item.sessionId);
+                    },
+                  },
+                  React.createElement(
+                    'span',
+                    { className: 'ss-notifylogkind' },
+                    item.kind === 'done'
+                      ? t('notifyDone')
+                      : item.kind === 'ask'
+                        ? t('notifyAsk')
+                        : t('notifyInterrupt'),
+                  ),
+                  React.createElement(
+                    'span',
+                    { className: 'ss-notifylogbody' },
+                    React.createElement(
+                      'span',
+                      { className: 'ss-notifylogtitle' },
+                      item.title || item.sessionId || '',
+                    ),
+                    item.workspace ? React.createElement('span', { className: 'ss-notifylogws' }, item.workspace) : null,
+                    item.summary ? React.createElement('span', { className: 'ss-notifylogsum' }, item.summary) : null,
+                  ),
+                  item.muted ? React.createElement('span', { className: 'ss-badge ss-notifylogmuted' }, t('notifyMutedTag')) : null,
+                  React.createElement('span', { className: 'ss-notifylogtime' }, fmtWhen(item.at)),
+                ),
+              ),
+            ),
+        React.createElement(
+          'div',
+          { className: 'ss-notifyactions' },
+          React.createElement(
+            'button',
+            {
+              type: 'button',
+              className: 'ss-btn quiet',
+              disabled: notifyLog.length === 0,
+              onClick: () => {
+                markNotifyLogRead();
+                setNotifyLog(readNotifyLog());
+              },
+            },
+            t('notifyMarkAllRead'),
+          ),
+          React.createElement(
+            'button',
+            {
+              type: 'button',
+              className: 'ss-btn quiet',
+              disabled: notifyLog.length === 0,
+              onClick: () => {
+                clearNotifyLog();
+                setNotifyLog(readNotifyLog());
+              },
+            },
+            t('notifyClearHistory'),
+          ),
+        ),
+      ),
+      React.createElement(
+        'div',
+        { className: 'ss-card ss-notifycard' },
         React.createElement('h4', null, t('notifyPermission')),
         React.createElement(
           'div',
@@ -5390,7 +5985,16 @@ function MainPanel(props) {
         'div',
         { className: 'ss-card ss-notifycard' },
         React.createElement('h4', null, t('notifyTitle')),
-        toggleText('enabled', t('notifyEnabled'), t('notifyEnabledHint'), setMaster),
+        row(
+          iconLabel(React.createElement(BellIcon), t('notifyEnabled')),
+          t('notifyEnabledHint'),
+          React.createElement(Switch, {
+            checked: notifySettings.enabled === true,
+            label: t('notifyEnabled'),
+            disabled: notifyBusy,
+            onChange: setMaster,
+          }),
+        ),
         row(
           t('notifyChannels'),
           t('notifyChannelsHint'),
@@ -5451,14 +6055,119 @@ function MainPanel(props) {
             { className: 'ss-subhead ss-behaviorsub' },
             t('notifyBehavior'),
           ),
-          togglePlain(
-            'openOnClick',
-            t('notifyOpenOnClick'),
+          row(
+            iconLabel(React.createElement(ExternalLinkIcon), t('notifyOpenOnClick')),
             t('notifyOpenOnClickHint'),
-            false,
-            notifySettings.enabled && notifySettings.openOnClick,
+            React.createElement(Switch, {
+              checked: notifySettings.enabled && notifySettings.openOnClick,
+              label: t('notifyOpenOnClick'),
+              disabled: notifyBusy,
+              onChange: (value) => updateNotify({ openOnClick: value }),
+            }),
           ),
         ),
+      ),
+      React.createElement(
+        'div',
+        { className: 'ss-card ss-notifycard ss-quietcard' },
+        React.createElement('h4', null, t('quietTitle')),
+        row(
+          React.createElement(
+            'span',
+            { className: 'ss-fieldicon' },
+            React.createElement(MoonIcon),
+            t('quietEnabled'),
+          ),
+          t('quietEnabledHint'),
+          React.createElement(Switch, {
+            checked: quiet.enabled,
+            label: t('quietEnabled'),
+            disabled: notifyBusy,
+            onChange: (value) => updateNotify({ quiet: { ...quiet, enabled: value } }),
+          }),
+          { borderBottom: 'none', paddingBottom: '6px' },
+        ),
+        React.createElement(
+          Collapse,
+          { open: quiet.enabled },
+          React.createElement(
+            'div',
+            { className: 'ss-notifytimes' },
+            React.createElement(
+              'label',
+              { className: 'ss-notifytime' },
+              React.createElement('span', null, t('quietStart')),
+              React.createElement('input', {
+                type: 'time',
+                value: quiet.start,
+                disabled: notifyBusy,
+                onChange: (event) => updateNotify({ quiet: { ...quiet, start: event.target.value } }),
+              }),
+            ),
+            React.createElement(
+              'label',
+              { className: 'ss-notifytime' },
+              React.createElement('span', null, t('quietEnd')),
+              React.createElement('input', {
+                type: 'time',
+                value: quiet.end,
+                disabled: notifyBusy,
+                onChange: (event) => updateNotify({ quiet: { ...quiet, end: event.target.value } }),
+              }),
+            ),
+          ),
+        ),
+        React.createElement('div', { className: 'ss-quiettimesep' }),
+        row(
+          React.createElement(
+            'span',
+            { className: 'ss-fieldicon' },
+            React.createElement(BellOffIcon),
+            t('muteDone'),
+          ),
+          t('muteDoneHint'),
+          React.createElement(Switch, {
+            checked: notifySettings.muteDone === true,
+            label: t('muteDone'),
+            disabled: notifyBusy,
+            onChange: (value) => updateNotify({ muteDone: value }),
+          }),
+        ),
+        row(
+          React.createElement(
+            'span',
+            { className: 'ss-fieldicon' },
+            React.createElement(FolderOffIcon),
+            t('muteWorkspaces'),
+          ),
+          t('muteWorkspacesHint'),
+          null,
+          { borderBottom: 'none', paddingBottom: '8px' },
+        ),
+        (boot && Array.isArray(boot.workspaces) ? boot.workspaces : []).length === 0
+          ? React.createElement('div', { className: 'ss-hint' }, t('noWorkspaces'))
+          : React.createElement(
+              'div',
+              { className: 'ss-mutelist' },
+              (boot.workspaces || []).map((workspace) =>
+                React.createElement(
+                  'label',
+                  { key: workspace.id, className: 'ss-muteworkspace' },
+                  React.createElement('input', {
+                    type: 'checkbox',
+                    checked: notifySettings.mutedWorkspaces.includes(workspace.id),
+                    disabled: notifyBusy,
+                    onChange: (event) => {
+                      const set = new Set(notifySettings.mutedWorkspaces);
+                      if (event.target.checked) set.add(workspace.id);
+                      else set.delete(workspace.id);
+                      updateNotify({ mutedWorkspaces: [...set] });
+                    },
+                  }),
+                  workspace.title || workspace.name || workspace.id,
+                ),
+              ),
+            ),
       ),
       React.createElement(
         'div',
@@ -5484,7 +6193,7 @@ function MainPanel(props) {
 
   const tabs = [
     { id: 'sessions', label: `${t('tabSessions')} (${sessions.length})` },
-    { id: 'notify', label: t('tabNotify') },
+    { id: 'notify', label: notifyUnreadCount(notifyLog) > 0 ? `${t('tabNotify')} (${notifyUnreadCount(notifyLog)})` : t('tabNotify') },
     { id: 'panels', label: t('tabPanels') },
     { id: 'trash', label: `${t('tabTrash')} (${trash.length})` },
   ];
@@ -5815,7 +6524,7 @@ function SettingsPage(props) {
             'div',
             null,
             field(
-              t('defaultDeleteMode'),
+              iconLabel(React.createElement(TrashIcon), t('defaultDeleteMode')),
               t('deleteModeHint'),
               React.createElement(
                 'div',
@@ -5840,7 +6549,7 @@ function SettingsPage(props) {
               ),
             ),
             field(
-              t('confirmPurgeLabel'),
+              iconLabel(React.createElement(ShieldIcon), t('confirmPurgeLabel')),
               t('confirmPurgeHint'),
               React.createElement(Switch, {
                 checked: settings.confirmPurge !== false,
@@ -5850,7 +6559,7 @@ function SettingsPage(props) {
               }),
             ),
             field(
-              t('entryVisible'),
+              iconLabel(React.createElement(SidebarIcon), t('entryVisible')),
               t('entryVisibleHint'),
               React.createElement(Switch, {
                 checked: !hidden.has(PANEL_ID),
@@ -5860,7 +6569,7 @@ function SettingsPage(props) {
               }),
             ),
             field(
-              t('exportDefaultFormat'),
+              iconLabel(React.createElement(ExportFileIcon), t('exportDefaultFormat')),
               t('exportDefaultFormatHint'),
               React.createElement(
                 'div',
@@ -5882,7 +6591,7 @@ function SettingsPage(props) {
               ),
             ),
             field(
-              t('clearTranslationCache'),
+              iconLabel(React.createElement(EraserIcon), t('clearTranslationCache')),
               t('clearTranslationCacheHint'),
               React.createElement(
                 'button',
@@ -5891,7 +6600,7 @@ function SettingsPage(props) {
               ),
             ),
             field(
-              t('openDataDir'),
+              iconLabel(React.createElement(FolderIcon), t('openDataDir')),
               t('openDataDirHint'),
               React.createElement(
                 'button',
@@ -5900,7 +6609,7 @@ function SettingsPage(props) {
               ),
             ),
             field(
-              t('tabTrash'),
+              iconLabel(React.createElement(TrashIcon), t('tabTrash')),
               trashCount > 0 ? t('trashHint') : t('emptyTrashDisabled'),
               React.createElement(
                 'button',
