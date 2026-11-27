@@ -28,7 +28,7 @@ export const inject = [
 const NS = 'dsh-keeper';
 const PANEL_ID = 'dsh-keeper';
 const API_PATH = '/dsh-keeper/api';
-const PLUGIN_VERSION = '0.1.5';
+const PLUGIN_VERSION = '0.1.6';
 const META_NAME = '.dsh-keeper-trash.json';
 /** Pre-rename identifiers. Kept only so existing installs migrate in place. */
 const LEGACY_NS = 'sidebar-studio';
@@ -654,6 +654,8 @@ async function sessionInfo(ctx, id, snapshot, dirMap, runningSet, registry) {
     running: runningSet.has(id),
     archived: registry.archived.has(id),
     pinned: registry.pinned.has(id),
+    origin: typeof snapshot?.header?.origin === 'string' ? snapshot.header.origin : '',
+    parentSession: typeof snapshot?.header?.parentSession === 'string' ? snapshot.header.parentSession : '',
   };
 }
 

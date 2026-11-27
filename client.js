@@ -58,18 +58,54 @@ const DICT = {
     tabPanels: '插件管理',
     tabNotify: '通知管理',
     quickJump: '快速跳转',
-    quickJumpPlaceholder: '搜索会话、工作区或操作…',
-    quickJumpHint: '↑↓ 选择 · Enter 打开 · Esc 关闭',
+    quickJumpTitle: 'DSH 管家 · 快速跳转',
+    quickJumpPlaceholder: '搜索会话、工作区、设置或操作…',
+    quickJumpHint: 'Esc 关闭 · Enter 打开 · ↑↓ 选择',
     quickJumpEmpty: '没有匹配结果',
-    quickJumpGroupActions: '操作',
+    quickJumpGroupActions: 'DSH 管家',
+  quickJumpGroupSettings: '设置',
     quickJumpGroupWorkspaces: '工作区',
     quickJumpGroupSessions: '会话',
+    quickJumpGroupPlugins: '其他插件',
+    quickJumpGroupTrash: '回收站',
+    quickJumpArchived: '已归档',
+    quickJumpSubagent: '子会话',
+    quickJumpCopyId: '复制 ID',
+    quickJumpCopied: '已复制 Session ID',
+    quickJumpRestored: '已恢复「{name}」到原工作区',
+    quickJumpRestoreFailed: '恢复失败：{message}',
+    quickJumpMarkRead: '全部标为已读',
+    quickJumpMarkedRead: '通知均已标为已读',
+    quickJumpClearHistory: '清空通知历史',
+    quickJumpHistoryCleared: '通知历史已清空',
+    quickJumpOpenDataDir: '打开数据目录',
+    quickJumpOpenDataDirFailed: '无法打开数据目录。',
     quickJumpOpenTab: '打开{name}',
     quickJumpSettings: '打开 DSH 管家设置',
     quickJumpRefresh: '刷新数据',
-    quickJumpKeysHint: '快捷键可在 DSH 设置 → 快捷键修改',
+    quickJumpKeysHint: '可在 DSH 主程序设置 → DSH 管家 → 快捷键中修改',
+    quickJumpChipAll: '全部',
+    quickJumpChipActions: '管家',
+  quickJumpChipSettings: '设置',
+    quickJumpChipPlugins: '插件',
+    quickJumpChipWorkspaces: '工作区',
+    quickJumpChipSessions: '会话',
+    quickJumpLoading: '加载中…',
     shortcutTitle: '快捷键',
-    shortcutHint: '快速跳转的快捷键；可在 DSH 设置 → 快捷键中修改。',
+    shortcutHint: '快速跳转的快捷键，点击右侧键位进行录制。',
+    shortcutRecordTitle: '录制快捷键',
+    shortcutRecordHint: '按下新的组合键；Esc 取消，Backspace 清除绑定。',
+    shortcutRecordModifier: '请至少按住一个修饰键（Ctrl / Alt / Shift / ⌘）。',
+    shortcutRecordInvalid: '该组合键不可用：{reason}',
+    shortcutRecordConflict: '与「{names}」冲突，请换一个组合键。',
+    shortcutSaved: '快捷键已保存',
+    shortcutReset: '重置',
+    shortcutResetDone: '已恢复默认快捷键',
+    shortcutRecording: '按键盘输入快捷键',
+    shortcutClear: '清除',
+    shortcutCleared: '已清除快捷键',
+    shortcutEmptyText: '点击录制',
+    shortcutSaveFailed: '快捷键保存失败：{message}',
     notifyTitle: '任务状态通知',
     notifySubtitle: '设置任务提醒方式、静音规则，并查看本机通知历史。',
     notifyEnabled: '启用通知',
@@ -394,7 +430,7 @@ const DICT = {
     modeArchiveHint: '只从侧栏隐藏，不移动磁盘文件，可从会话列表取消归档。',
     modeDelete: '永久删除',
     modeDeleteHint: '直接删除日志、缓存与索引，不可恢复。',
-    deleteModeHint: '列表「删除会话」的行为：默认移入回收站、可恢复；永久删除不可恢复。删除前是否弹确认框由下方开关统一控制。',
+    deleteModeHint: '列表「删除会话」的行为：默认移入回收站、可恢复；永久删除不可恢复。删除前是否弹确认框由右侧开关统一控制。',
     confirmPurgeLabel: '删除前二次确认',
     confirmPurgeHint: '开启后，列表删除（移入回收站 / 永久删除）、回收站「彻底删除 / 清空回收站」与清理空会话都会先弹出确认框；关闭后这些操作直接执行。',
     entryVisible: '显示侧栏入口',
@@ -430,18 +466,54 @@ const DICT = {
     tabPanels: 'Plugin manager',
     tabNotify: 'Notification manager',
     quickJump: 'Quick jump',
-    quickJumpPlaceholder: 'Search sessions, workspaces, or commands…',
-    quickJumpHint: '↑↓ select · Enter open · Esc close',
+    quickJumpTitle: 'DSH Keeper · Quick jump',
+    quickJumpPlaceholder: 'Search sessions, workspaces, settings, or commands…',
+    quickJumpHint: 'Esc close · Enter open · ↑↓ select',
     quickJumpEmpty: 'No matches',
-    quickJumpGroupActions: 'Actions',
+    quickJumpGroupActions: 'DSH Keeper',
+  quickJumpGroupSettings: 'Settings',
     quickJumpGroupWorkspaces: 'Workspaces',
     quickJumpGroupSessions: 'Sessions',
+    quickJumpGroupPlugins: 'Other plugins',
+    quickJumpGroupTrash: 'Trash',
+    quickJumpArchived: 'Archived',
+    quickJumpSubagent: 'Subagent',
+    quickJumpCopyId: 'Copy ID',
+    quickJumpCopied: 'Session ID copied',
+    quickJumpRestored: 'Restored "{name}" to its workspace',
+    quickJumpRestoreFailed: 'Restore failed: {message}',
+    quickJumpMarkRead: 'Mark all read',
+    quickJumpMarkedRead: 'All notifications marked as read',
+    quickJumpClearHistory: 'Clear notification history',
+    quickJumpHistoryCleared: 'Notification history cleared',
+    quickJumpOpenDataDir: 'Open data directory',
+    quickJumpOpenDataDirFailed: 'Could not open the data directory.',
     quickJumpOpenTab: 'Open {name}',
     quickJumpSettings: 'Open DSH Keeper settings',
     quickJumpRefresh: 'Refresh data',
-    quickJumpKeysHint: 'Change this shortcut in DSH Settings → Shortcuts',
+    quickJumpKeysHint: 'Change it in DSH Settings → DSH Keeper → Shortcut.',
+    quickJumpChipAll: 'All',
+    quickJumpChipActions: 'Keeper',
+  quickJumpChipSettings: 'Settings',
+    quickJumpChipPlugins: 'Plugins',
+    quickJumpChipWorkspaces: 'Workspaces',
+    quickJumpChipSessions: 'Sessions',
+    quickJumpLoading: 'Loading…',
     shortcutTitle: 'Shortcut',
-    shortcutHint: 'Opens quick jump; change it in DSH Settings → Shortcuts.',
+    shortcutHint: 'Quick jump shortcut; click the keys on the right to record one.',
+    shortcutRecordTitle: 'Record shortcut',
+    shortcutRecordHint: 'Press the new combination; Esc cancels, Backspace clears the binding.',
+    shortcutRecordModifier: 'Hold at least one modifier (Ctrl / Alt / Shift / ⌘).',
+    shortcutRecordInvalid: 'This combination is unavailable: {reason}',
+    shortcutRecordConflict: 'Conflicts with “{names}”; choose another combination.',
+    shortcutSaved: 'Shortcut saved',
+    shortcutReset: 'Reset',
+    shortcutResetDone: 'Shortcut reset to default',
+    shortcutRecording: 'Press the keys',
+    shortcutClear: 'Clear',
+    shortcutCleared: 'Shortcut cleared',
+    shortcutEmptyText: 'Click to record',
+    shortcutSaveFailed: 'Failed to save shortcut: {message}',
     notifyTitle: 'Task status notifications',
     notifySubtitle: 'Set how task reminders arrive, tune quiet rules, and review local notification history.',
     notifyEnabled: 'Enable notifications',
@@ -767,7 +839,7 @@ const DICT = {
     modeArchiveHint: 'Hides the session from the sidebar without touching the log; unarchive from the session list.',
     modeDelete: 'Delete permanently',
     modeDeleteHint: 'Removes the log, cache and index at once; cannot be undone.',
-    deleteModeHint: 'What the list Delete action does: move to trash (restorable) by default; permanent delete cannot be undone. Confirmation is controlled by the switch below.',
+    deleteModeHint: 'What the list Delete action does: move to trash (restorable) by default; permanent delete cannot be undone. Confirmation is controlled by the switch on the right.',
     confirmPurgeLabel: 'Confirm before deleting',
     confirmPurgeHint: 'When on, deleting from the list (move to trash or permanently), purging or emptying the trash, and cleaning blank sessions all ask for confirmation. When off, they run immediately.',
     entryVisible: 'Show sidebar entry',
@@ -1031,8 +1103,8 @@ body[data-ds-dark-theme] .ss-rank-3{color:#ecc94b}
 .ss-fieldicon{display:inline-flex;align-items:center;gap:6px}
 .ss-fieldicon svg{flex:none;opacity:.8}
 .ss-fieldlabel small{display:block;color:var(--dsw-alias-label-secondary);font-size:11px;margin-top:3px;max-width:520px;line-height:1.55}
-.ss-radios{display:flex;flex-direction:column;gap:6px}
-.ss-radio{display:flex;align-items:center;gap:8px;font-size:12px;cursor:pointer;color:var(--dsw-alias-label-primary)}
+.ss-radios{display:flex;flex-direction:column;gap:6px;white-space:nowrap}
+.ss-radio{display:flex;align-items:center;gap:8px;font-size:12px;cursor:pointer;color:var(--dsw-alias-label-primary);white-space:nowrap}
 .ss-radio input{accent-color:var(--dsw-alias-brand-primary);width:14px;height:14px;margin:0}
 .ss-mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:11px;color:var(--dsw-alias-label-secondary);word-break:break-all}
 .ss-settingshead{margin-bottom:16px}
@@ -1201,19 +1273,43 @@ body[data-ds-dark-theme] .ss-rank-3{color:#ecc94b}
 /* --- quick jump palette (session-wide Ctrl+Alt+K) --- */
 .ss-qj-overlay{position:fixed;inset:0;z-index:1300;background:rgba(0,0,0,.45);display:flex;align-items:flex-start;justify-content:center;padding:12vh 24px 24px}
 .ss-qj-panel{width:min(620px,100%);max-height:70vh;display:flex;flex-direction:column;background:var(--dsw-alias-bg-layer-1);border:1px solid var(--dsw-alias-border-l2);border-radius:12px;box-shadow:0 12px 40px rgba(0,0,0,.35);overflow:hidden}
-.ss-qj-head{padding:12px 16px 8px;font-size:13px;font-weight:600;color:var(--dsw-alias-label-primary)}
+.ss-qj-head{padding:12px 16px 12px;font-size:13px;font-weight:600;color:var(--dsw-alias-label-primary)}
 .ss-qj-input{margin:0 12px 8px;padding:8px 10px;border-radius:8px;border:1px solid var(--dsw-alias-border-l2);background:var(--dsw-alias-bg-layer-2);color:var(--dsw-alias-label-primary);font-family:inherit;font-size:13px;line-height:20px;box-sizing:border-box}
 .ss-qj-input:focus{outline:none;border-color:var(--dsw-alias-state-business-primary)}
-.ss-qj-list{flex:1;overflow:auto;padding:1px 8px 8px}
-.ss-qj-item{display:flex;gap:8px;align-items:center;width:100%;padding:8px;border:none;border-radius:8px;background:transparent;color:var(--dsw-alias-label-primary);font-family:inherit;font-size:13px;line-height:20px;text-align:left;cursor:pointer}
+.ss-qj-chips{display:flex;flex-wrap:wrap;gap:6px;padding:0 12px 8px}
+.ss-qj-chip{font-size:11px;line-height:18px;padding:1px 9px;border-radius:999px;border:1px solid var(--dsw-alias-border-l1);background:transparent;color:var(--dsw-alias-label-tertiary);cursor:pointer}
+.ss-qj-chip:hover{color:var(--dsw-alias-label-primary);border-color:var(--dsw-alias-border-l2)}
+.ss-qj-chip.on{border-color:var(--dsw-alias-state-business-primary);color:var(--dsw-alias-state-business-primary);background:color-mix(in srgb,var(--dsw-alias-state-business-primary) 10%,transparent)}
+.ss-qj-loading{padding:8px;text-align:center;font-size:11px;color:var(--dsw-alias-label-tertiary)}
+.ss-qj-list{flex:1;min-height:0;overflow:auto;padding:1px 8px 8px;scrollbar-gutter:stable}
+.ss-qj-item{display:flex;gap:12px;align-items:center;width:100%;padding:8px;border:none;border-radius:8px;background:transparent;color:var(--dsw-alias-label-primary);font-family:inherit;font-size:13px;line-height:20px;text-align:left;cursor:pointer}
 .ss-qj-item:hover,.ss-qj-item.active{background:var(--dsw-alias-bg-layer-2)}
 .ss-qj-item:focus-visible{outline:2px solid var(--dsw-alias-state-business-primary);outline-offset:-2px}
-.ss-qj-kind{flex:none;font-size:11px;color:var(--dsw-alias-label-tertiary);min-width:36px}
+.ss-qj-kind{flex:none;width:64px;font-size:11px;color:var(--dsw-alias-label-tertiary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .ss-qj-label{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .ss-qj-meta{flex:none;font-size:11px;color:var(--dsw-alias-label-tertiary);max-width:45%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ss-qj-copy{flex:none;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:10px;line-height:14px;padding:1px 6px;border-radius:4px;border:1px solid var(--dsw-alias-border-l1);background:var(--dsw-alias-bg-layer-2);color:var(--dsw-alias-label-tertiary);cursor:pointer;opacity:0;transition:opacity .15s ease,border-color .15s ease,color .15s ease}
+.ss-qj-item:hover .ss-qj-copy,.ss-qj-item.active .ss-qj-copy,.ss-qj-copy:focus-visible{opacity:1}
+.ss-qj-copy:hover{border-color:var(--dsw-alias-border-l2);color:var(--dsw-alias-label-primary)}
 .ss-qj-empty{padding:24px;text-align:center;color:var(--dsw-alias-label-tertiary);font-size:12px}
-.ss-qj-hint{padding:8px 12px;border-top:1px solid var(--dsw-alias-border-l1);font-size:11px;color:var(--dsw-alias-label-tertiary)}
-.ss-kbd{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:10px;line-height:16px;padding:0 4px;border-radius:4px;border:1px solid var(--dsw-alias-border-l2);background:var(--dsw-alias-bg-layer-2);color:var(--dsw-alias-label-secondary);margin-left:4px}
+.ss-qj-hint{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding:8px 12px;border-top:1px solid var(--dsw-alias-border-l1);font-size:11px;color:var(--dsw-alias-label-tertiary)}
+.ss-qj-hintactions{display:flex;flex-wrap:wrap;align-items:center;gap:12px;min-width:0}
+.ss-qj-keys{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:11px;line-height:18px;padding:1px 8px;border-radius:4px;border:1px solid var(--dsw-alias-border-l1);background:var(--dsw-alias-bg-layer-3,var(--dsw-alias-bg-layer-2));color:var(--dsw-alias-label-secondary);white-space:nowrap;margin-left:auto}
+.ss-kbd{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:10px;line-height:16px;padding:0 4px;border-radius:4px;border:1px solid var(--dsw-alias-border-l2);background:var(--dsw-alias-bg-layer-2);color:var(--dsw-alias-label-secondary);margin-left:4px;white-space:nowrap}
+.ss-kbdbtn{position:relative;display:inline-flex;align-items:center;justify-content:center;width:160px;height:30px;box-sizing:border-box;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:12px;font-weight:500;letter-spacing:.2px;line-height:24px;padding:0 22px;border-radius:6px;border:1px solid var(--dsw-alias-border-l1);background:var(--dsw-alias-bg-layer-3,var(--dsw-alias-bg-layer-2));color:var(--dsw-alias-label-primary);cursor:pointer;margin-left:4px;white-space:nowrap;flex:none;user-select:none;transition:transform .26s ease;box-shadow:none}
+.ss-kbdrow .ss-kbdbtn{transform:translateX(58px)}
+.ss-kbdrow.is-cleared .ss-kbdbtn{transform:translateX(0)}
+.ss-kbdbtn:not(.recording):hover{border-color:var(--dsw-alias-border-l2);color:var(--dsw-alias-label-primary)}
+.ss-kbdbtn.recording{border-color:var(--dsw-alias-state-business-primary);color:var(--dsw-alias-state-business-primary);background:var(--dsw-alias-bg-layer-3,var(--dsw-alias-bg-layer-2))}
+.ss-kbdtext{display:block;width:100%;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ss-kbdrow{position:relative;display:inline-flex;align-items:center;gap:6px;justify-content:flex-end;width:218px}
+.ss-kbdclear{position:absolute;right:6px;top:50%;transform:translateY(-50%);border:none;background:transparent;color:var(--dsw-alias-label-tertiary);font-size:13px;line-height:1;padding:0 1px;cursor:pointer;border-radius:3px;display:inline-flex;align-items:center}
+.ss-kbdclear:hover{color:var(--dsw-alias-label-primary);background:var(--dsw-alias-bg-layer-2)}
+.ss-kbdrow .ss-btn.ghost.ss-kbdreset{font-size:11px;padding:0 10px;line-height:28px;height:30px;width:52px;min-width:52px;margin-left:0;justify-content:center;box-sizing:border-box;background:var(--dsw-alias-bg-layer-3,var(--dsw-alias-bg-layer-2));border:1px solid transparent;color:var(--dsw-alias-label-primary);opacity:0;pointer-events:none;transition:opacity .26s ease,border-color .26s ease}
+.ss-kbdrow .ss-btn.ghost.ss-kbdreset.is-on{opacity:1;pointer-events:auto;border-color:var(--dsw-alias-border-l1)}
+.ss-kbdrow .ss-btn.ghost.ss-kbdreset:hover:not(:disabled){background:var(--dsw-alias-bg-layer-3,var(--dsw-alias-bg-layer-2));border-color:var(--dsw-alias-border-l2);color:var(--dsw-alias-label-primary)}
+.ss-kbdrow .ss-btn.ghost.ss-kbdreset:active:not(:disabled){background:color-mix(in srgb,var(--dsw-alias-bg-layer-3) 84%,var(--dsw-alias-label-primary) 16%);border-color:var(--dsw-alias-border-l2)}
+.ss-kbdbtn:focus-visible{outline:none;border-color:var(--dsw-alias-state-business-primary);box-shadow:none}
 `;
 
 /* ------------------------------------------------------------- primitives */
@@ -1672,6 +1768,27 @@ function FolderIcon(props) {
 }
 
 /** Label with a leading icon, matching the quiet-rules rows. */
+function KeyboardIcon(props) {
+  const size = Number(props?.size) || 15;
+  return React.createElement(
+    'svg',
+    {
+      width: size,
+      height: size,
+      viewBox: '0 0 24 24',
+      fill: 'none',
+      stroke: 'currentColor',
+      strokeWidth: 1.8,
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      className: props?.className,
+      'aria-hidden': 'true',
+    },
+    React.createElement('rect', { x: 3, y: 7, width: 18, height: 10, rx: 2 }),
+    React.createElement('path', { d: 'M6.6 10.3h.01M9.6 10.3h.01M12.6 10.3h.01M15.6 10.3h.01M17.4 10.3h.01M8 13.7h8' }),
+  );
+}
+
 function iconLabel(icon, text) {
   return React.createElement('span', { className: 'ss-fieldicon' }, icon, text);
 }
@@ -3201,35 +3318,261 @@ function BootstrapSkeleton() {
 
 const QUICK_JUMP_ID = 'dsh-keeper.quickJump';
 
+function formatShortcutKeys(keys) {
+  if (!Array.isArray(keys) || keys.length === 0) return '';
+  return keys.filter((key) => key !== '+').join(' + ');
+}
+
+function shortcutBindingFromEvent(event, platform) {
+  if (!event || typeof event.code !== 'string' || event.code === '') return null;
+  if (/^(Control|Alt|Shift|Meta|OS)/.test(event.code)) return null;
+  const modifiers = [];
+  if (platform === 'macos') {
+    if (event.metaKey) modifiers.push('primary');
+    if (event.ctrlKey) modifiers.push('control');
+  } else {
+    if (event.ctrlKey) modifiers.push('primary');
+    if (event.metaKey) modifiers.push('meta');
+  }
+  if (event.altKey) modifiers.push('alt');
+  if (event.shiftKey) modifiers.push('shift');
+  if (modifiers.length === 0) return null;
+  return { code: event.code, modifiers };
+}
+
+function openPluginTarget(bridge, panelId, close, fallback) {
+  const target = String(panelId || '');
+  if (typeof close === 'function') close();
+  let opened = false;
+  if (target && bridge && typeof bridge.openPanel === 'function') {
+    try {
+      opened = bridge.openPanel(target) === true;
+    } catch {
+      opened = false;
+    }
+  }
+  if (!opened && typeof fallback === 'function') fallback(target);
+  return opened;
+}
+
 function createQuickJump(bridge, t) {
   let root = null;
   let input = null;
   let list = null;
+  let panelEl = null;
   let rows = [];
   let active = 0;
   let sessions = [];
   let workspaces = [];
   let actions = [];
+  let trashes = [];
+  let plugins = [];
+  let settingsSections = [];
+  let dataDir = '';
+  let chip = 'all';
+  let limit = 12;
+  let loadingTimer = null;
+  let chipsEl = null;
+  const PAGE = 12;
+  const STEP = 10;
+  const MRU_KEY = 'dsh-keeper:qj-mru';
+
+  function readMru() {
+    try {
+      const raw = window.localStorage.getItem(MRU_KEY);
+      const parsed = raw ? JSON.parse(raw) : [];
+      return Array.isArray(parsed) ? parsed.filter((value) => typeof value === 'string') : [];
+    } catch {
+      return [];
+    }
+  }
+
+  function touchMru(id) {
+    const value = String(id ?? '');
+    if (!value) return;
+    try {
+      const next = [value, ...readMru().filter((item) => item !== value)].slice(0, 50);
+      window.localStorage.setItem(MRU_KEY, JSON.stringify(next));
+    } catch {
+      /* best effort */
+    }
+  }
+
+  function sortByMru(list) {
+    const rank = new Map(readMru().map((id, index) => [id, index]));
+    return list
+      .map((row, index) => ({ row, index }))
+      .sort((left, right) => {
+        const leftRank = rank.has(left.row.id) ? rank.get(left.row.id) : Number.MAX_SAFE_INTEGER;
+        const rightRank = rank.has(right.row.id) ? rank.get(right.row.id) : Number.MAX_SAFE_INTEGER;
+        return leftRank - rightRank || left.index - right.index;
+      })
+      .map((entry) => entry.row);
+  }
+
+  function rowChip(row) {
+    if (row.kind === 'session' || row.kind === 'trash') return 'session';
+    if (row.kind === 'plugin') return 'plugin';
+    if (row.kind === 'setting') return 'setting';
+    if (row.kind === 'workspace') return 'workspace';
+    return 'action';
+  }
+
+  function chipOptions() {
+    return [
+      { id: 'all', label: t('quickJumpChipAll') },
+      { id: 'action', label: t('quickJumpChipActions') },
+      { id: 'setting', label: t('quickJumpChipSettings') },
+      { id: 'plugin', label: t('quickJumpChipPlugins') },
+      { id: 'workspace', label: t('quickJumpChipWorkspaces') },
+      { id: 'session', label: t('quickJumpChipSessions') },
+    ];
+  }
+
+  function renderChips() {
+    if (!chipsEl) return;
+    chipsEl.textContent = '';
+    for (const option of chipOptions()) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = `ss-qj-chip${chip === option.id ? ' on' : ''}`;
+      button.textContent = option.label;
+      button.addEventListener('mousedown', (event) => event.preventDefault());
+      button.addEventListener('click', () => setChip(option.id));
+      chipsEl.append(button);
+    }
+  }
+
+  function setChip(next) {
+    chip = next;
+    limit = PAGE;
+    active = 0;
+    if (panelEl) panelEl.style.height = '';
+    if (input) input.value = '';
+    rows = filterRows('');
+    renderChips();
+    paint();
+    if (input) input.focus();
+  }
+
+  function loadMore() {
+    if (loadingTimer || limit >= rows.length) return;
+    const snapshot = rows;
+    loadingTimer = setTimeout(() => {
+      loadingTimer = null;
+      if (!list || rows !== snapshot) return;
+      const previous = limit;
+      limit = Math.min(rows.length, limit + STEP);
+      const loadingRow = Array.from(list.children).find((child) => child && child.className === 'ss-qj-loading');
+      if (loadingRow) loadingRow.remove();
+      for (let index = previous; index < limit; index += 1) appendRow(rows[index], index);
+    }, 180);
+    showLoadingRow();
+  }
+
+  function onScroll() {
+    if (!list || loadingTimer) return;
+    if (list.clientHeight <= 0) return;
+    if (list.scrollHeight <= list.clientHeight + 8) return;
+    if (list.scrollTop + list.clientHeight < list.scrollHeight - 48) return;
+    loadMore();
+  }
+
+  function onWheel(event) {
+    if (!list || loadingTimer || limit >= rows.length) return;
+    if (event.deltaY <= 0) return;
+    const noScrollbar = list.scrollHeight <= list.clientHeight + 8;
+    const atBottom = list.scrollTop + list.clientHeight >= list.scrollHeight - 8;
+    if (!noScrollbar && !atBottom) return;
+    event.preventDefault();
+    loadMore();
+  }
 
   function close() {
     if (!root) return;
     document.removeEventListener('keydown', onKeyDown, true);
+    if (loadingTimer) clearTimeout(loadingTimer);
+    loadingTimer = null;
+    chipsEl = null;
+    chip = 'all';
+    limit = PAGE;
+    active = 0;
     root.remove();
     root = null;
     input = null;
     list = null;
+    panelEl = null;
     rows = [];
   }
 
   function openPanelTab(tab, extra) {
     close();
+    const payload = { tab, ...(extra || {}) };
+    if (typeof bridge.setPendingTab === 'function') bridge.setPendingTab(payload);
     try {
       bridge.openPanel(PANEL_ID);
       window.dispatchEvent(
-        new CustomEvent('dsh-keeper:switch-tab', { detail: { tab, ...(extra || {}) } }),
+        new CustomEvent('dsh-keeper:switch-tab', { detail: payload }),
       );
     } catch {
       /* best effort */
+    }
+  }
+
+  function notify(text) {
+    const value = String(text ?? '').trim();
+    if (!value) return;
+    try {
+      if (typeof document === 'undefined' || !document.body) return;
+      let node = document.getElementById('ss-global-toast');
+      if (!node) {
+        node = document.createElement('div');
+        node.id = 'ss-global-toast';
+        node.className = 'ss-global-toast';
+        node.setAttribute('role', 'status');
+        document.body.appendChild(node);
+      }
+      node.textContent = value;
+      node.classList.add('ss-global-toast-open');
+      clearTimeout(node.__ssTimer);
+      node.__ssTimer = setTimeout(() => node.classList.remove('ss-global-toast-open'), 4600);
+    } catch {
+      /* best effort */
+    }
+  }
+
+  function copySessionId(sessionId) {
+    const id = String(sessionId ?? '');
+    if (!id) return;
+    Promise.resolve()
+      .then(() => bridge.copyText(id))
+      .then(() => notify(t('quickJumpCopied')))
+      .catch(() => notify(t('quickJumpCopied')));
+  }
+
+  async function restoreTrashRow(row) {
+    try {
+      const result = await bridge.api('restoreSessions', { sessionIds: [row.id] });
+      const failure = Array.isArray(result?.errors) ? result.errors[0] : null;
+      if (failure) throw new Error(failure.message || failure.code || 'restore failed');
+      try {
+        window.dispatchEvent(new CustomEvent('dsh-keeper:refresh'));
+      } catch {
+        /* best effort */
+      }
+      notify(t('quickJumpRestored').replace('{name}', row.title));
+    } catch (error) {
+      notify(t('quickJumpRestoreFailed').replace('{message}', String(error?.message ?? error)));
+    }
+  }
+
+  async function openDataDirectory() {
+    try {
+      if (!dataDir) throw new Error(t('quickJumpOpenDataDirFailed'));
+      const value = await bridge.api('openWorkspacePath', { path: dataDir });
+      if (!value || value.opened !== true) throw new Error(t('quickJumpOpenDataDirFailed'));
+    } catch {
+      notify(t('quickJumpOpenDataDirFailed'));
     }
   }
 
@@ -3262,6 +3605,9 @@ function createQuickJump(bridge, t) {
           }
         },
       },
+      { kind: 'action', id: 'notify:read', label: t('quickJumpMarkRead'), run: () => { markNotifyLogRead(); notify(t('quickJumpMarkedRead')); } },
+      { kind: 'action', id: 'notify:clear', label: t('quickJumpClearHistory'), run: () => { clearNotifyLog(); notify(t('quickJumpHistoryCleared')); } },
+      { kind: 'action', id: 'data:open', label: t('quickJumpOpenDataDir'), run: () => { void openDataDirectory(); } },
       { kind: 'action', id: 'refresh', label: t('quickJumpRefresh'), run: () => { void reload(true); } },
     ];
   }
@@ -3269,73 +3615,165 @@ function createQuickJump(bridge, t) {
   function kindLabel(row) {
     if (row.kind === 'session') return t('quickJumpGroupSessions');
     if (row.kind === 'workspace') return t('quickJumpGroupWorkspaces');
+    if (row.kind === 'trash') return t('quickJumpGroupTrash');
+    if (row.kind === 'plugin') return t('quickJumpGroupPlugins');
+    if (row.kind === 'setting') return t('quickJumpGroupSettings');
     return t('quickJumpGroupActions');
   }
 
   function filterRows(value) {
     const q = String(value ?? '').trim().toLowerCase();
     const match = (text) => String(text ?? '').toLowerCase().includes(q);
-    if (!q) return [...actions, ...workspaces.map(workspaceRow), ...sessions.slice(0, 20)];
-    return [
-      ...sessions.filter((session) => match(session.title) || match(session.workspaceTitle)).slice(0, 50),
-      ...workspaces.filter((workspace) => match(workspace?.title || workspace?.path || workspace?.id)).map(workspaceRow),
-      ...actions.filter((action) => match(action.label)),
-    ];
+    let list;
+    if (!q) {
+      list = [
+        ...actions,
+        ...settingsSections,
+        ...plugins,
+        ...workspaces.map(workspaceRow),
+        ...sessions,
+        ...trashes,
+      ];
+    } else {
+      list = [
+        ...sessions.filter((session) => match(session.title) || match(session.workspaceTitle)).slice(0, 50),
+        ...trashes.filter((row) => match(row.title) || match(row.workspaceTitle)).slice(0, 20),
+        ...plugins.filter((row) => match(row.title) || match(row.panelId) || match(row.registrant)),
+        ...settingsSections.filter((row) => match(row.title) || match(row.sectionId)),
+        ...workspaces.filter((workspace) => match(workspace?.title || workspace?.path || workspace?.id)).map(workspaceRow),
+        ...actions.filter((action) => match(action.label)),
+      ];
+    }
+    if (!q && chip !== 'all') {
+      list = list.filter((row) => rowChip(row) === chip);
+    }
+    return sortByMru(list);
+  }
+
+  function appendRow(row, index) {
+    const item = document.createElement('button');
+    item.type = 'button';
+    item.className = `ss-qj-item${index === active ? ' active' : ''}`;
+    item.setAttribute('role', 'option');
+    item.setAttribute('aria-selected', index === active ? 'true' : 'false');
+    const kind = document.createElement('span');
+    kind.className = 'ss-qj-kind';
+    kind.textContent = kindLabel(row);
+    const label = document.createElement('span');
+    label.className = 'ss-qj-label';
+    label.textContent = row.kind === 'action' ? row.label : row.title;
+    item.append(kind, label);
+    const metaParts = [];
+    if (row.kind === 'session') {
+      if (row.archived) metaParts.push(t('quickJumpArchived'));
+      if (row.parentSession) metaParts.push(t('quickJumpSubagent'));
+      if (row.workspaceTitle) metaParts.push(row.workspaceTitle);
+    } else if (row.kind === 'trash') {
+      metaParts.push(t('quickJumpGroupTrash'));
+      if (row.workspaceTitle) metaParts.push(row.workspaceTitle);
+    } else if (row.kind === 'plugin') {
+      metaParts.push(row.registrant || row.panelId);
+    }
+    if (metaParts.length > 0) {
+      const meta = document.createElement('span');
+      meta.className = 'ss-qj-meta';
+      meta.textContent = metaParts.join(' · ');
+      item.append(meta);
+    }
+    if (row.kind === 'session') {
+      const copy = document.createElement('button');
+      copy.type = 'button';
+      copy.className = 'ss-qj-copy';
+      copy.textContent = 'ID';
+      copy.title = t('quickJumpCopyId');
+      copy.addEventListener('mousedown', (event) => event.stopPropagation());
+      copy.addEventListener('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        copySessionId(row.id);
+      });
+      item.append(copy);
+    }
+    item.addEventListener('mouseenter', () => {
+      active = index;
+      Array.from(list.children).forEach((child, childIndex) => {
+        if (child instanceof HTMLElement) child.classList.toggle('active', childIndex === index);
+      });
+    });
+    item.addEventListener('click', () => runRow(row));
+    list.append(item);
+  }
+
+  function showLoadingRow() {
+    if (!list) return;
+    if (Array.from(list.children).some((child) => child && child.className === 'ss-qj-loading')) return;
+    const more = document.createElement('div');
+    more.className = 'ss-qj-loading';
+    more.textContent = t('quickJumpLoading');
+    list.append(more);
+  }
+
+  function lockPanelHeight() {
+    if (!panelEl || !list) return;
+    if (panelEl.style.height) return;
+    if (limit !== PAGE || rows.length <= limit) return;
+    const height = panelEl.offsetHeight;
+    if (height > 0) panelEl.style.height = `${height}px`;
   }
 
   function paint() {
     if (!list) return;
+    const scrollTop = list.scrollTop;
     list.textContent = '';
     if (rows.length === 0) {
       const empty = document.createElement('div');
       empty.className = 'ss-qj-empty';
       empty.textContent = t('quickJumpEmpty');
       list.append(empty);
+      lockPanelHeight();
       return;
     }
-    rows.forEach((row, index) => {
-      const item = document.createElement('button');
-      item.type = 'button';
-      item.className = `ss-qj-item${index === active ? ' active' : ''}`;
-      item.setAttribute('role', 'option');
-      item.setAttribute('aria-selected', index === active ? 'true' : 'false');
-      const kind = document.createElement('span');
-      kind.className = 'ss-qj-kind';
-      kind.textContent = kindLabel(row);
-      const label = document.createElement('span');
-      label.className = 'ss-qj-label';
-      label.textContent = row.kind === 'action' ? row.label : row.title;
-      item.append(kind, label);
-      if (row.kind === 'session') {
-        const meta = document.createElement('span');
-        meta.className = 'ss-qj-meta';
-        meta.textContent = row.workspaceTitle;
-        item.append(meta);
-      }
-      item.addEventListener('mouseenter', () => {
-        active = index;
-        Array.from(list.children).forEach((child, childIndex) => {
-          if (child instanceof HTMLElement) child.classList.toggle('active', childIndex === index);
-        });
-      });
-      item.addEventListener('click', () => runRow(row));
-      list.append(item);
-    });
+    rows.slice(0, limit).forEach((row, index) => appendRow(row, index));
+    // Freeze the whole palette height on the first page, so loading more rows
+    // scrolls inside the list instead of growing the panel.
+    lockPanelHeight();
+    if (loadingTimer && rows.length > limit) showLoadingRow();
+    list.scrollTop = scrollTop;
   }
 
   function runRow(row) {
     if (!row) return;
+    touchMru(row.id);
     if (row.kind === 'session') {
       close();
       Promise.resolve(bridge.openSession(row.id)).catch(() => {});
+      return;
+    }
+    if (row.kind === 'trash') {
+      close();
+      void restoreTrashRow(row);
+      return;
+    }
+    if (row.kind === 'plugin') {
+      openPluginTarget(bridge, row.panelId, close, (target) => openPanelTab('panels', { panelQuery: target }));
+      return;
+    }
+    if (row.kind === 'setting') {
+      close();
+      try {
+        if (typeof bridge.openSettingsSection === 'function') bridge.openSettingsSection(row.sectionId);
+      } catch {
+        /* ignore */
+      }
       return;
     }
     row.run();
   }
 
   function move(delta) {
-    if (rows.length === 0) return;
-    active = (active + delta + rows.length) % rows.length;
+    const visibleCount = Math.min(limit, rows.length);
+    if (visibleCount === 0) return;
+    active = (active + delta + visibleCount) % visibleCount;
     paint();
     const current = list && list.children[active];
     if (current && typeof current.scrollIntoView === 'function') current.scrollIntoView({ block: 'nearest' });
@@ -3370,6 +3808,8 @@ function createQuickJump(bridge, t) {
 
   function onInput() {
     active = 0;
+    limit = PAGE;
+    if (panelEl) panelEl.style.height = '';
     rows = filterRows(input ? input.value : '');
     paint();
   }
@@ -3394,12 +3834,58 @@ function createQuickJump(bridge, t) {
           workspaceTitle: String(workspace.title || workspace.path || workspace.id || ''),
           updatedAt: Number(session.updatedAt) || 0,
           running: session.running === true,
+          archived: session.archived === true,
+          origin: String(session.origin || ''),
+          parentSession: String(session.parentSession || ''),
         });
       }
     }
     sessionList.sort((left, right) => right.updatedAt - left.updatedAt);
+    const trashList = (Array.isArray(boot?.trash) ? boot.trash : [])
+      .map((entry) => ({
+        kind: 'trash',
+        id: String(entry?.sessionId ?? ''),
+        title: String(entry?.title || entry?.sessionId || ''),
+        workspaceTitle: String(entry?.workspaceTitle || ''),
+        deletedAt: Number(entry?.deletedAt) || 0,
+      }))
+      .filter((row) => row.id !== '');
+    let pluginList = [];
+    try {
+      const panels = typeof bridge?.listPanels === 'function' ? bridge.listPanels() : [];
+      pluginList = (panels ?? [])
+        .filter((panel) => panel && panel.id && panel.id !== PANEL_ID)
+        .map((panel) => ({
+          kind: 'plugin',
+          id: `plugin:${panel.id}`,
+          title: String(panel.label || panel.id),
+          panelId: String(panel.id ?? ''),
+          registrant: String(panel.registrant || ''),
+        }))
+        .sort((left, right) => left.registrant.localeCompare(right.registrant) || left.title.localeCompare(right.title));
+    } catch {
+      pluginList = [];
+    }
+    dataDir = String(boot?.paths?.dataDir ?? '');
+    let sectionList = [];
+    try {
+      const sections = typeof bridge?.listSettingsSections === 'function' ? bridge.listSettingsSections() : [];
+      sectionList = (Array.isArray(sections) ? sections : [])
+        .filter((section) => section && section.id)
+        .map((section) => ({
+          kind: 'setting',
+          id: `setting:${section.id}`,
+          title: String(section.label || section.id),
+          sectionId: String(section.id),
+        }));
+    } catch {
+      sectionList = [];
+    }
     workspaces = workspaceList;
     sessions = sessionList;
+    trashes = trashList;
+    plugins = pluginList;
+    settingsSections = sectionList;
     actions = buildActions();
     if (input) {
       rows = filterRows(input.value);
@@ -3419,12 +3905,13 @@ function createQuickJump(bridge, t) {
     });
     const panel = document.createElement('div');
     panel.className = 'ss-qj-panel';
+    panelEl = panel;
     panel.setAttribute('role', 'dialog');
     panel.setAttribute('aria-modal', 'true');
-    panel.setAttribute('aria-label', t('quickJump'));
+    panel.setAttribute('aria-label', t('quickJumpTitle'));
     const head = document.createElement('div');
     head.className = 'ss-qj-head';
-    head.textContent = t('quickJump');
+    head.textContent = t('quickJumpTitle');
     const field = document.createElement('input');
     field.className = 'ss-qj-input';
     field.type = 'text';
@@ -3433,20 +3920,48 @@ function createQuickJump(bridge, t) {
     field.setAttribute('spellcheck', 'false');
     const hint = document.createElement('div');
     hint.className = 'ss-qj-hint';
-    hint.textContent = `${t('quickJumpHint')} · ${t('quickJumpKeysHint')}`;
+    const currentKeys = typeof bridge?.shortcutKeys === 'function' ? bridge.shortcutKeys() : [];
+    const hintParts = String(t('quickJumpHint')).split(/\s*·\s*/).filter(Boolean);
+    const hintActions = document.createElement('div');
+    hintActions.className = 'ss-qj-hintactions';
+    for (const part of hintParts) {
+      const segment = document.createElement('span');
+      segment.textContent = part;
+      hintActions.append(segment);
+    }
+    const keySegment = document.createElement('span');
+    keySegment.className = 'ss-qj-keys';
+    keySegment.title = t('quickJumpKeysHint');
+    keySegment.textContent = Array.isArray(currentKeys) && currentKeys.length > 0
+      ? formatShortcutKeys(currentKeys)
+      : t('quickJumpKeysHint');
+    hint.append(hintActions, keySegment);
     const container = document.createElement('div');
     container.className = 'ss-qj-list';
     container.setAttribute('role', 'listbox');
+    const chips = document.createElement('div');
+    chips.className = 'ss-qj-chips';
+    chips.setAttribute('role', 'tablist');
     input = field;
     list = container;
-    panel.append(head, field, container, hint);
+    chipsEl = chips;
+    chip = 'all';
+    limit = PAGE;
+    active = 0;
+    renderChips();
+    panel.append(head, field, chips, container, hint);
     overlay.append(panel);
     root = overlay;
     document.body.append(overlay);
     document.addEventListener('keydown', onKeyDown, true);
     field.addEventListener('input', onInput);
+    container.addEventListener('scroll', onScroll);
+    container.addEventListener('wheel', onWheel, { passive: false });
     field.focus();
     await reload(false);
+    setTimeout(() => {
+      lockPanelHeight();
+    }, 0);
   }
 
   function toggle() {
@@ -3474,9 +3989,23 @@ function MainPanel(props) {
       const detail = event && event.detail ? event.detail : {};
       if (typeof detail.tab === 'string') setTab(detail.tab);
       if (typeof detail.query === 'string') setQuery(detail.query);
+      if (typeof detail.panelQuery === 'string') setPanelQuery(detail.panelQuery);
+      if (typeof bridge?.takePendingTab === 'function') bridge.takePendingTab();
     };
+    const onRefresh = () => setReloadKey((key) => key + 1);
     window.addEventListener('dsh-keeper:switch-tab', onSwitchTab);
-    return () => window.removeEventListener('dsh-keeper:switch-tab', onSwitchTab);
+    window.addEventListener('dsh-keeper:refresh', onRefresh);
+    return () => {
+      window.removeEventListener('dsh-keeper:switch-tab', onSwitchTab);
+      window.removeEventListener('dsh-keeper:refresh', onRefresh);
+    };
+  }, []);
+  React.useEffect(() => {
+    const pending = typeof bridge?.takePendingTab === 'function' ? bridge.takePendingTab() : null;
+    if (!pending) return;
+    if (typeof pending.tab === 'string') setTab(pending.tab);
+    if (typeof pending.query === 'string') setQuery(pending.query);
+    if (typeof pending.panelQuery === 'string') setPanelQuery(pending.panelQuery);
   }, []);
   const [query, setQuery] = React.useState('');
   const [panelQuery, setPanelQuery] = React.useState('');
@@ -4622,7 +5151,7 @@ function MainPanel(props) {
             },
           },
           t('quickJump'),
-          qjKeys.length > 0 ? React.createElement('kbd', { className: 'ss-kbd' }, qjKeys.join('+')) : null,
+          qjKeys.length > 0 ? React.createElement('kbd', { className: 'ss-kbd' }, formatShortcutKeys(qjKeys)) : null,
         ),
         React.createElement(
           'button',
@@ -7064,7 +7593,7 @@ function SettingsPage(props) {
   const deleteMode = settings.deleteMode === 'delete' ? 'delete' : 'trash';
   const hidden = new Set(boot?.state?.hiddenPanels ?? []);
   const paths = boot?.paths ?? {};
-  const version = boot?.version ?? '0.1.5';
+  const version = boot?.version ?? '0.1.6';
   const trash = Array.isArray(boot?.trash) ? boot.trash : [];
   const trashCount = trash.length;
 
@@ -7123,6 +7652,102 @@ function SettingsPage(props) {
     if (typeof bridge?.subscribeShortcutKeys !== 'function') return undefined;
     return bridge.subscribeShortcutKeys((keys) => setQjKeys(Array.isArray(keys) ? keys : []));
   }, []);
+  const [recordingShortcut, setRecordingShortcut] = React.useState(false);
+  const [shortcutCleared, setShortcutCleared] = React.useState(false);
+  const refreshShortcutKeys = () => {
+    if (typeof bridge?.shortcutKeys !== 'function') return;
+    const next = bridge.shortcutKeys();
+    setQjKeys(Array.isArray(next) ? next : []);
+  };
+  const stopShortcutRecording = () => {
+    setRecordingShortcut(false);
+    if (typeof bridge?.setShortcutRecording === 'function') void bridge.setShortcutRecording(false);
+  };
+  React.useEffect(() => {
+    if (!recordingShortcut) return undefined;
+    if (typeof bridge?.setShortcutRecording === 'function') void bridge.setShortcutRecording(true);
+    const onKey = (event) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        stopShortcutRecording();
+        return;
+      }
+      if (['Control', 'Alt', 'Shift', 'Meta', 'OS'].includes(event.key)) return;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      const binding = shortcutBindingFromEvent(
+        event,
+        typeof bridge?.shortcutPlatform === 'function' ? bridge.shortcutPlatform() : 'windows',
+      );
+      if (!binding) {
+        setToast({ text: t('shortcutRecordModifier') });
+        return;
+      }
+      const info = typeof bridge?.describeShortcut === 'function' ? bridge.describeShortcut(binding) : null;
+      if (!info || info.issue) {
+        setToast({ text: t('shortcutRecordInvalid').replace('{reason}', String(info?.issue ?? 'invalid')) });
+        return;
+      }
+      if (Array.isArray(info.conflicts) && info.conflicts.length > 0) {
+        setToast({ text: t('shortcutRecordConflict').replace('{names}', info.conflicts.join('、')) });
+        return;
+      }
+      if (typeof bridge?.saveShortcut !== 'function') {
+        setToast({ text: t('shortcutSaveFailed').replace('{message}', 'unsupported') });
+        stopShortcutRecording();
+        return;
+      }
+      void bridge.saveShortcut(binding).then(
+        () => {
+          stopShortcutRecording();
+          setShortcutCleared(false);
+          refreshShortcutKeys();
+          setToast({ text: t('shortcutSaved') });
+        },
+        (error) => {
+          stopShortcutRecording();
+          setToast({ text: t('shortcutSaveFailed').replace('{message}', String(error?.message ?? error)) });
+        },
+      );
+    };
+    window.addEventListener('keydown', onKey, true);
+    const onPointerDown = (event) => {
+      const target = event.target;
+      if (target && typeof target.closest === 'function' && target.closest('.ss-kbdbtn')) return;
+      stopShortcutRecording();
+    };
+    window.addEventListener('mousedown', onPointerDown, true);
+    return () => {
+      window.removeEventListener('keydown', onKey, true);
+      window.removeEventListener('mousedown', onPointerDown, true);
+      if (typeof bridge?.setShortcutRecording === 'function') void bridge.setShortcutRecording(false);
+    };
+  }, [recordingShortcut]);
+  const clearShortcut = () => {
+    if (recordingShortcut || busy || typeof bridge?.saveShortcut !== 'function') return;
+    void bridge.saveShortcut(null).then(
+      () => {
+        setShortcutCleared(true);
+        refreshShortcutKeys();
+        setToast({ text: t('shortcutCleared') });
+      },
+      (error) => setToast({ text: t('shortcutSaveFailed').replace('{message}', String(error?.message ?? error)) }),
+    );
+  };
+  const resetShortcutDefault = () => {
+    if (busy || typeof bridge?.resetShortcut !== 'function') return;
+    stopShortcutRecording();
+    void bridge.resetShortcut().then(
+      () => {
+        setShortcutCleared(false);
+        refreshShortcutKeys();
+        setTimeout(refreshShortcutKeys, 120);
+        setToast({ text: t('shortcutResetDone') });
+      },
+      (error) => setToast({ text: t('shortcutSaveFailed').replace('{message}', String(error?.message ?? error)) }),
+    );
+  };
 
   const resetSettings = () =>
     call(async () => {
@@ -7259,9 +7884,65 @@ function SettingsPage(props) {
               }),
             ),
             field(
-              iconLabel(React.createElement(BellIcon), t('shortcutTitle')),
+              iconLabel(React.createElement(KeyboardIcon), t('shortcutTitle')),
               t('shortcutHint'),
-              React.createElement('kbd', { className: 'ss-kbd' }, qjKeys.length > 0 ? qjKeys.join('+') : '—'),
+              React.createElement(
+                'span',
+                { className: `ss-kbdrow${shortcutCleared ? ' is-cleared' : ''}` },
+                React.createElement(
+                  'span',
+                  {
+                    role: 'button',
+                    tabIndex: 0,
+                    className: `ss-kbdbtn${recordingShortcut ? ' recording' : ''}`,
+                    title: qjKeys.length > 0 ? '' : (typeof bridge?.shortcutError === 'function' ? bridge.shortcutError() : ''),
+                    onClick: () => {
+                      if (recordingShortcut) return;
+                      setRecordingShortcut(true);
+                    },
+                    onKeyDown: (event) => {
+                      if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        if (!recordingShortcut) setRecordingShortcut(true);
+                      }
+                    },
+                  },
+                  React.createElement(
+                    'span',
+                    { className: 'ss-kbdtext' },
+                    recordingShortcut
+                      ? t('shortcutRecording')
+                      : (qjKeys.length > 0 ? formatShortcutKeys(qjKeys) : t('shortcutEmptyText')),
+                  ),
+                  !recordingShortcut && qjKeys.length > 0
+                    ? React.createElement(
+                        'button',
+                        {
+                          type: 'button',
+                          className: 'ss-kbdclear',
+                          'aria-label': t('shortcutClear'),
+                          title: t('shortcutClear'),
+                          onClick: (event) => {
+                            event.stopPropagation();
+                            clearShortcut();
+                          },
+                        },
+                        '×',
+                      )
+                    : null,
+                ),
+                React.createElement(
+                  'button',
+                  {
+                    type: 'button',
+                    className: `ss-btn ghost ss-kbdreset${shortcutCleared ? ' is-on' : ''}`,
+                    disabled: !shortcutCleared,
+                    'aria-hidden': !shortcutCleared,
+                    onClick: resetShortcutDefault,
+                  },
+                  t('shortcutReset'),
+                ),
+              ),
             ),
             field(
               iconLabel(React.createElement(SidebarIcon), t('entryVisible')),
@@ -7612,6 +8293,37 @@ function apply(ctx) {
       .sort((a, b) => a.order - b.order || a.label.localeCompare(b.label));
   };
 
+  const listSettingsSections = () => {
+    let entries = [];
+    try {
+      if (ctx.slots && typeof ctx.slots.entries === 'function') {
+        entries = ctx.slots.entries('settings.section') ?? [];
+      }
+    } catch {
+      entries = [];
+    }
+    if ((!Array.isArray(entries) || entries.length === 0) && ctx.slots && typeof ctx.slots.entriesOfSlot === 'function') {
+      try {
+        entries = ctx.slots.entriesOfSlot('settings.section') ?? [];
+      } catch {
+        entries = [];
+      }
+    }
+    const locale = getLocaleId();
+    return entries
+      .map((entry) => {
+        const options = entry && typeof entry === 'object' && entry.options ? entry.options : entry;
+        const id = String(options?.id ?? '');
+        return {
+          id,
+          order: Number(options?.order ?? 100),
+          label: resolveLabel(options, t, locale) || id,
+        };
+      })
+      .filter((section) => section.id !== '')
+      .sort((a, b) => a.order - b.order || a.label.localeCompare(b.label));
+  };
+
   let lastHidden = [];
 
   const applyHide = (hiddenIds, panels) => {
@@ -7793,6 +8505,30 @@ function apply(ctx) {
     }
   };
 
+  const openSettingsSection = (sectionId) => {
+    const id = String(sectionId || '');
+    if (!id) return false;
+    try {
+      const slots = ctx.slots;
+      const entries = slots && typeof slots.entriesOfSlot === 'function' ? slots.entriesOfSlot('sidebar.settings') : null;
+      const entry = (entries || []).find((candidate) => candidate && candidate.store !== undefined);
+      const host = slots && typeof slots.hostFace === 'function' ? slots.hostFace() : null;
+      const store = host && typeof host.storeOf === 'function' && entry ? host.storeOf(entry) : null;
+      const actions = store && store.actions;
+      if (actions && typeof actions.openSection === 'function') {
+        actions.openSection(id);
+        return true;
+      }
+      if (actions && typeof actions.open === 'function') {
+        actions.open();
+        return true;
+      }
+    } catch (error) {
+      console.warn('[dsh-keeper] settings section route unavailable:', error);
+    }
+    return false;
+  };
+
   // Remember which plugins owned a sidebar panel, so a plugin disabled at
   // runtime can keep its row (and Enable button) even after a page reload.
   const PANEL_MEMORY_KEY = 'dsh-keeper:panel-memory';
@@ -7815,6 +8551,9 @@ function apply(ctx) {
 
   let quickJump = null;
   let quickJumpShortcuts = null;
+  let quickJumpShortcutError = '';
+  let quickJumpRecording = false;
+let pendingTabSwitch = null;
   const quickJumpKeyListeners = new Set();
   const readQuickJumpKeys = () => {
     try {
@@ -7841,8 +8580,18 @@ function apply(ctx) {
   const bridge = {
     api,
     listPanels,
+    listSettingsSections,
     getLocaleId,
     openPanel,
+    openSettingsSection,
+    setPendingTab: (payload) => {
+      pendingTabSwitch = payload && typeof payload === 'object' ? payload : null;
+    },
+    takePendingTab: () => {
+      const value = pendingTabSwitch;
+      pendingTabSwitch = null;
+      return value;
+    },
     openSettings,
     copyText,
     applyHide,
@@ -7853,6 +8602,72 @@ function apply(ctx) {
       if (quickJump) quickJump.toggle();
     },
     shortcutKeys: readQuickJumpKeys,
+    shortcutError: () => quickJumpShortcutError,
+    shortcutPlatform: () => {
+      try {
+        return quickJumpShortcuts && typeof quickJumpShortcuts.platform === 'string'
+          ? quickJumpShortcuts.platform
+          : 'windows';
+      } catch (error) {
+        return 'windows';
+      }
+    },
+    describeShortcut: (binding) => {
+      try {
+        if (!quickJumpShortcuts || typeof quickJumpShortcuts.describeBinding !== 'function') return null;
+        const info = quickJumpShortcuts.describeBinding(binding);
+        if (!info) return null;
+        const conflicts = Array.isArray(info.conflicts)
+          ? info.conflicts.filter((id) => id !== QUICK_JUMP_ID)
+          : [];
+        return { ...info, conflicts };
+      } catch (error) {
+        return null;
+      }
+    },
+    saveShortcut: async (binding) => {
+      const shortcuts = quickJumpShortcuts;
+      if (!shortcuts || typeof shortcuts.edit !== 'function') throw new Error('shortcut service unavailable');
+      const snapshot = shortcuts.config && typeof shortcuts.config.getSnapshot === 'function'
+        ? shortcuts.config.getSnapshot()
+        : null;
+      if (!snapshot || snapshot.revision === undefined) throw new Error('shortcut config unavailable');
+      const result = await shortcuts.edit({ type: 'set', id: QUICK_JUMP_ID, binding }, snapshot.revision);
+      if (result && result.status === 'saved') return result;
+      const reason = result && result.issue
+        ? String(result.issue)
+        : result && Array.isArray(result.conflicts) && result.conflicts.length > 0
+          ? result.conflicts.join(',')
+          : String((result && result.status) || 'unknown');
+      throw new Error(reason);
+    },
+    resetShortcut: async () => {
+      if (!quickJumpShortcuts || typeof quickJumpShortcuts.edit !== 'function') {
+        throw new Error(quickJumpShortcutError || 'shortcut service unavailable');
+      }
+      const snapshot = quickJumpShortcuts.config?.getSnapshot?.();
+      const revision = snapshot?.revision;
+      if (revision === undefined) throw new Error('shortcut config not ready');
+      const result = await quickJumpShortcuts.edit({ type: 'reset', id: QUICK_JUMP_ID }, revision);
+      if (!result || result.status !== 'saved') {
+        throw new Error(
+          result?.issue
+            ?? (result?.conflicts?.length ? `conflicts: ${result.conflicts.join(', ')}` : result?.status ?? 'reset failed'),
+        );
+      }
+      return result;
+    },
+    setShortcutRecording: (active) => {
+      quickJumpRecording = active === true;
+      try {
+        if (quickJumpShortcuts && typeof quickJumpShortcuts.recording === 'function') {
+          return Promise.resolve(quickJumpShortcuts.recording(active === true)).catch(() => {});
+        }
+      } catch (error) {
+        /* ignore */
+      }
+      return Promise.resolve();
+    },
     subscribeShortcutKeys: (listener) => {
       if (typeof listener !== 'function') return () => {};
       quickJumpKeyListeners.add(listener);
@@ -7865,8 +8680,10 @@ function apply(ctx) {
   };
   quickJump = createQuickJump(bridge, t);
 
-  // Session-wide quick jump: Ctrl+Alt+K (Cmd+Option+K on macOS). DSH core already
-  // owns plain Ctrl+K for the sidebar search, so this command uses Alt as well.
+  // Session-wide quick jump: Ctrl+Alt+K (Cmd+Option+K on macOS) on desktop.
+  // On Web the host registers Ctrl+Alt+K for its sidebar search, so Web keeps
+  // Ctrl+Alt+J to avoid a shortcut conflict. Web/Linux only admits
+  // Slash/Comma/Period defaults, so no web:linux binding is declared.
   try {
     if (typeof ctx.inject === 'function') {
       ctx.inject(['shortcuts'], (scope) => {
@@ -7874,12 +8691,13 @@ function apply(ctx) {
           const shortcuts = scope.shortcuts;
           if (!shortcuts || typeof shortcuts.register !== 'function') return () => {};
           quickJumpShortcuts = shortcuts;
-          const defaults = {};
-          for (const runtime of ['desktop', 'web']) {
-            for (const platform of ['windows', 'macos', 'linux']) {
-              defaults[`${runtime}:${platform}`] = { code: 'KeyK', modifiers: ['primary', 'alt'] };
-            }
-          }
+          const defaults = {
+            'desktop:macos': { code: 'KeyK', modifiers: ['primary', 'alt'] },
+            'desktop:windows': { code: 'KeyK', modifiers: ['primary', 'alt'] },
+            'desktop:linux': { code: 'KeyK', modifiers: ['primary', 'alt'] },
+            'web:macos': { code: 'KeyJ', modifiers: ['primary', 'alt'] },
+            'web:windows': { code: 'KeyJ', modifiers: ['primary', 'alt'] },
+          };
           let dispose = () => {};
           try {
             dispose = shortcuts.register({
@@ -7889,14 +8707,18 @@ function apply(ctx) {
               defaults,
               regions: ['page', 'editable'],
               modals: [],
-              resolve: () => ({
-                status: 'handled',
-                run: () => {
-                  if (quickJump) quickJump.toggle();
-                },
-              }),
+              resolve: () => (quickJumpRecording
+                ? { status: 'pass' }
+                : {
+                    status: 'handled',
+                    run: () => {
+                      if (quickJump) quickJump.toggle();
+                    },
+                  }),
             });
+            quickJumpShortcutError = '';
           } catch (error) {
+            quickJumpShortcutError = String(error?.message ?? error);
             console.warn('[dsh-keeper] quick jump shortcut registration failed:', error);
           }
           const offCatalog = shortcuts.catalog && typeof shortcuts.catalog.subscribe === 'function'
