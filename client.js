@@ -57,8 +57,21 @@ const DICT = {
     tabTrash: '回收站',
     tabPanels: '插件管理',
     tabNotify: '通知管理',
+    quickJump: '快速跳转',
+    quickJumpPlaceholder: '搜索会话、工作区或操作…',
+    quickJumpHint: '↑↓ 选择 · Enter 打开 · Esc 关闭',
+    quickJumpEmpty: '没有匹配结果',
+    quickJumpGroupActions: '操作',
+    quickJumpGroupWorkspaces: '工作区',
+    quickJumpGroupSessions: '会话',
+    quickJumpOpenTab: '打开{name}',
+    quickJumpSettings: '打开 DSH 管家设置',
+    quickJumpRefresh: '刷新数据',
+    quickJumpKeysHint: '快捷键可在 DSH 设置 → 快捷键修改',
+    shortcutTitle: '快捷键',
+    shortcutHint: '快速跳转的快捷键；可在 DSH 设置 → 快捷键中修改。',
     notifyTitle: '任务状态通知',
-    notifySubtitle: '允许任务完成或失败时接收通知',
+    notifySubtitle: '设置任务提醒方式、静音规则，并查看本机通知历史。',
     notifyEnabled: '启用通知',
     notifyEnabledHint: '关闭后不再发送任何提醒。',
     notifyChannels: '提醒方式',
@@ -162,7 +175,7 @@ const DICT = {
     autoClean: '清理空会话',
     autoCleanEmpty: '没有可清理的空会话',
     cleanBlankConfirmTitle: '清理空会话',
-    cleanBlankConfirmBody: '将把 {n} 个空会话移入回收站，之后可以恢复。',
+    cleanBlankConfirmBody: '将把 {n} 个空会话（约 {size}）移入回收站，之后可以恢复。',
     showPath: '显示路径',
     hidePath: '隐藏路径',
     openPath: '打开路径',
@@ -200,19 +213,33 @@ const DICT = {
     cleanedMsg: '已清理 {n} 个空会话',
     undo: '撤销',
     confirmPurgeTitle: '彻底删除会话？',
-    confirmPurgeBody: '将从磁盘删除 {n} 个会话（约 {size}）。此操作不可撤销，删除后重启也不会恢复。',
+    confirmPurgeBody: '将从磁盘永久删除 {n} 个会话（约 {size}）。此操作不可撤销，删除后重启也不会恢复。',
     confirmEmptyTitle: '清空回收站？',
-    confirmEmptyBody: '将彻底删除回收站中全部 {n} 个会话（约 {size}），此操作不可撤销。',
+    confirmEmptyBody: '将永久删除回收站中全部 {n} 个会话（约 {size}），此操作不可撤销。',
     confirmDeleteTitle: '删除会话？',
     confirmDeleteBody: '将永久删除 {n} 个会话（约 {size}），并清理其日志、缓存与索引。此操作不可撤销，删除后重启也不会恢复。',
+    confirmTrashTitle: '移入回收站？',
+    confirmTrashBody: '将把 {n} 个会话（约 {size}）移入回收站，可随时恢复。',
+    deleteFailedTitle: '部分会话未删除',
+    purgeFailedTitle: '部分会话未彻底删除',
+    purgePartial: '已彻底删除 {ok} 个，{fail} 个失败',
+    cleanPartial: '已清理 {ok} 个，{fail} 个失败',
+    purgeSessionList: '将彻底删除：{names}',
+    previewExpand: '展开全部 {n} 个',
+    previewCollapse: '收起',
+    deleteWorkspaces: '所属工作区：{names}',
+    deleteSessionList: '将删除会话：{names}',
+    deletePartial: '已删除 {ok} 个，{fail} 个失败',
+    workspacesN: '{n} 个工作区',
     cancel: '取消',
     confirm: '确认删除',
+    close: '关闭',
     topSizes: '空间占用排行',
     topSizesHint: '按会话日志占用空间从大到小排列，共 {n} 个会话；点击标题或「选中」可加入批量操作。',
     selectHint: '点击选中此会话，加入批量操作。',
     selectTop: '选中',
     panelsTitle: '插件管理',
-    panelsHint: '开关只控制侧栏入口的显示，不会停用插件本身。',
+    panelsHint: '开关只控制侧栏入口的显示，插件仍会加载。要停用或卸载，点该行的「禁用」或「卸载」。',
     moreMenu: '更多',
     moreMenuMeta: '侧栏面板列表底部的分组菜单',
     moreBrowse: '浏览更多插件',
@@ -367,9 +394,9 @@ const DICT = {
     modeArchiveHint: '只从侧栏隐藏，不移动磁盘文件，可从会话列表取消归档。',
     modeDelete: '永久删除',
     modeDeleteHint: '直接删除日志、缓存与索引，不可恢复。',
-    deleteModeHint: '列表「删除会话」的行为：默认移入回收站、可恢复；选永久删除时删除前会二次确认。',
-    confirmPurgeLabel: '永久删除前二次确认',
-    confirmPurgeHint: '关闭后永久删除（列表删除或回收站彻底删除）不再弹出确认框，请谨慎使用。',
+    deleteModeHint: '列表「删除会话」的行为：默认移入回收站、可恢复；永久删除不可恢复。删除前是否弹确认框由下方开关统一控制。',
+    confirmPurgeLabel: '删除前二次确认',
+    confirmPurgeHint: '开启后，列表删除（移入回收站 / 永久删除）、回收站「彻底删除 / 清空回收站」与清理空会话都会先弹出确认框；关闭后这些操作直接执行。',
     entryVisible: '显示侧栏入口',
     entryVisibleHint: '关闭后侧栏底部不再显示「DSH 管家」图标，设置页仍然可用。',
     resetSettings: '恢复默认设置',
@@ -402,8 +429,21 @@ const DICT = {
     tabTrash: 'Trash',
     tabPanels: 'Plugin manager',
     tabNotify: 'Notification manager',
+    quickJump: 'Quick jump',
+    quickJumpPlaceholder: 'Search sessions, workspaces, or commands…',
+    quickJumpHint: '↑↓ select · Enter open · Esc close',
+    quickJumpEmpty: 'No matches',
+    quickJumpGroupActions: 'Actions',
+    quickJumpGroupWorkspaces: 'Workspaces',
+    quickJumpGroupSessions: 'Sessions',
+    quickJumpOpenTab: 'Open {name}',
+    quickJumpSettings: 'Open DSH Keeper settings',
+    quickJumpRefresh: 'Refresh data',
+    quickJumpKeysHint: 'Change this shortcut in DSH Settings → Shortcuts',
+    shortcutTitle: 'Shortcut',
+    shortcutHint: 'Opens quick jump; change it in DSH Settings → Shortcuts.',
     notifyTitle: 'Task status notifications',
-    notifySubtitle: 'Allow notifications when a task finishes or fails',
+    notifySubtitle: 'Set how task reminders arrive, tune quiet rules, and review local notification history.',
     notifyEnabled: 'Enable notifications',
     notifyEnabledHint: 'Off stops all reminders.',
     notifyChannels: 'How to notify',
@@ -508,7 +548,7 @@ const DICT = {
     autoClean: 'Clean blank sessions',
     autoCleanEmpty: 'No blank sessions to clean',
     cleanBlankConfirmTitle: 'Clean blank sessions',
-    cleanBlankConfirmBody: 'Move {n} blank sessions to the trash? You can restore them later.',
+    cleanBlankConfirmBody: 'Move {n} blank sessions ({size}) to the trash? You can restore them later.',
     showPath: 'Show path',
     hidePath: 'Hide path',
     openPath: 'Open path',
@@ -546,19 +586,33 @@ const DICT = {
     cleanedMsg: 'Cleaned {n} blank sessions',
     undo: 'Undo',
     confirmPurgeTitle: 'Delete permanently?',
-    confirmPurgeBody: 'This removes {n} sessions ({size}) from disk. It cannot be undone and will not come back after a restart.',
+    confirmPurgeBody: 'This permanently removes {n} sessions ({size}) from disk. It cannot be undone and will not come back after a restart.',
     confirmEmptyTitle: 'Empty the trash?',
     confirmEmptyBody: 'This permanently deletes all {n} sessions in the trash ({size}). It cannot be undone.',
     confirmDeleteTitle: 'Delete session?',
     confirmDeleteBody: 'This permanently deletes {n} sessions ({size}) and clears their transcript, caches and index. It cannot be undone and will not come back after a restart.',
+    confirmTrashTitle: 'Move to trash?',
+    confirmTrashBody: 'Move {n} sessions ({size}) to the trash? You can restore them later.',
+    deleteFailedTitle: 'Some sessions were not deleted',
+    purgeFailedTitle: 'Some sessions were not purged',
+    purgePartial: '{ok} purged, {fail} failed',
+    cleanPartial: '{ok} cleaned, {fail} failed',
+    purgeSessionList: 'Purge sessions: {names}',
+    previewExpand: 'Show all {n}',
+    previewCollapse: 'Show less',
+    deleteWorkspaces: 'Workspaces: {names}',
+    deleteSessionList: 'Sessions to delete: {names}',
+    deletePartial: '{ok} deleted, {fail} failed',
+    workspacesN: '{n} workspaces',
     cancel: 'Cancel',
     confirm: 'Delete permanently',
+    close: 'Close',
     topSizes: 'Largest sessions',
     topSizesHint: 'Ranked by session log size, largest first — {n} sessions. Click a title or Select to add it to a batch.',
     selectHint: 'Click to select this session for batch actions.',
     selectTop: 'Select',
     panelsTitle: 'Plugin manager',
-    panelsHint: 'Switches only hide the sidebar entry; the plugin keeps running.',
+    panelsHint: 'Switches only control whether the sidebar entry is shown; the plugin keeps running. To disable or uninstall one, click "Disable" or "Uninstall" on its row.',
     moreMenu: 'More',
     moreMenuMeta: 'Grouped menu at the end of the panel list',
     moreBrowse: 'Browse other plugins',
@@ -713,9 +767,9 @@ const DICT = {
     modeArchiveHint: 'Hides the session from the sidebar without touching the log; unarchive from the session list.',
     modeDelete: 'Delete permanently',
     modeDeleteHint: 'Removes the log, cache and index at once; cannot be undone.',
-    deleteModeHint: 'What the list Delete action does: move to trash (restorable) by default; permanent delete asks first.',
-    confirmPurgeLabel: 'Confirm before permanent delete',
-    confirmPurgeHint: 'When off, permanent deletes (from the list or the trash) happen without a dialog. Use with care.',
+    deleteModeHint: 'What the list Delete action does: move to trash (restorable) by default; permanent delete cannot be undone. Confirmation is controlled by the switch below.',
+    confirmPurgeLabel: 'Confirm before deleting',
+    confirmPurgeHint: 'When on, deleting from the list (move to trash or permanently), purging or emptying the trash, and cleaning blank sessions all ask for confirmation. When off, they run immediately.',
     entryVisible: 'Show sidebar entry',
     entryVisibleHint: 'Hide the DSH Keeper icon at the sidebar foot; the settings page stays available.',
     resetSettings: 'Reset to defaults',
@@ -935,9 +989,17 @@ body[data-ds-dark-theme] .ss-rank-3{color:#ecc94b}
 .ss-switch span{position:absolute;top:2px;left:2px;display:block;width:16px;height:16px;border-radius:50%;background:var(--dsw-alias-switch-thumb,var(--dsw-alias-label-secondary));transition:transform .26s cubic-bezier(.3,0,.2,1),background-color .26s ease}
 .ss-switch[aria-checked="true"] span{transform:translateX(16px);background:var(--dsw-alias-label-primary-foreground,var(--dsw-alias-bg-base))}
 .ss-overlay{position:fixed;inset:0;z-index:1200;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;padding:24px}
-.ss-modal{background:var(--dsw-alias-bg-layer-1);border:1px solid var(--dsw-alias-border-l2);border-radius:12px;max-width:480px;width:100%;padding:20px;box-shadow:0 12px 40px rgba(0,0,0,.35)}
+.ss-modal{position:relative;background:var(--dsw-alias-bg-layer-1);border:1px solid var(--dsw-alias-border-l2);border-radius:12px;max-width:480px;width:100%;padding:20px;box-shadow:0 12px 40px rgba(0,0,0,.35)}
+.ss-modalclose{position:absolute;top:10px;right:10px;width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;border:none;border-radius:6px;background:transparent;color:var(--dsw-alias-label-secondary);font-family:inherit;font-size:18px;line-height:1;cursor:pointer;transition:background .15s ease,color .15s ease}
+.ss-modalclose:hover{background:var(--dsw-alias-bg-layer-2);color:var(--dsw-alias-label-primary)}
+.ss-modalclose:focus-visible{outline:2px solid var(--dsw-alias-state-business-primary);outline-offset:2px}
 .ss-modal h3{margin:0 0 8px;font-size:15px;color:var(--dsw-alias-label-primary)}
 .ss-modal p{color:var(--dsw-alias-label-secondary);font-size:12px;line-height:1.65;margin:0 0 18px}
+.ss-modalbody{display:flex;flex-direction:column;gap:4px;margin:-8px 0 18px;padding:10px 12px;border-radius:8px;background:var(--dsw-alias-bg-layer-2);color:var(--dsw-alias-label-secondary);font-size:12px;line-height:1.6;word-break:break-word}
+.ss-previewtoggle{align-self:flex-start;margin-top:2px;padding:0;border:none;background:none;color:var(--dsw-alias-state-business-primary);font-family:inherit;font-size:12px;cursor:pointer}
+.ss-previewtoggle:hover{text-decoration:underline}
+.ss-modalpreview{max-height:40vh;overflow:auto}
+.ss-modaldesc + .ss-modalpreview{margin-top:6px}
 .ss-modalfoot{display:flex;justify-content:flex-end;gap:8px}
 .ss-modal.ss-exportmodal{width:min(520px,calc(100vw - 48px))}
 .ss-dialoghint{margin:-6px 0 14px;color:var(--dsw-alias-label-secondary);font-size:13px;line-height:1.55}
@@ -1136,6 +1198,22 @@ body[data-ds-dark-theme] .ss-rank-3{color:#ecc94b}
 /* --- settings navigation icon. DSH 0.2.2 exposes the keyed slot
    settings.section.icon (id = settings.section id), so the nav glyph is
    registered as slot content instead of being patched into the shell's DOM. --- */
+/* --- quick jump palette (session-wide Ctrl+Alt+K) --- */
+.ss-qj-overlay{position:fixed;inset:0;z-index:1300;background:rgba(0,0,0,.45);display:flex;align-items:flex-start;justify-content:center;padding:12vh 24px 24px}
+.ss-qj-panel{width:min(620px,100%);max-height:70vh;display:flex;flex-direction:column;background:var(--dsw-alias-bg-layer-1);border:1px solid var(--dsw-alias-border-l2);border-radius:12px;box-shadow:0 12px 40px rgba(0,0,0,.35);overflow:hidden}
+.ss-qj-head{padding:12px 16px 8px;font-size:13px;font-weight:600;color:var(--dsw-alias-label-primary)}
+.ss-qj-input{margin:0 12px 8px;padding:8px 10px;border-radius:8px;border:1px solid var(--dsw-alias-border-l2);background:var(--dsw-alias-bg-layer-2);color:var(--dsw-alias-label-primary);font-family:inherit;font-size:13px;line-height:20px;box-sizing:border-box}
+.ss-qj-input:focus{outline:none;border-color:var(--dsw-alias-state-business-primary)}
+.ss-qj-list{flex:1;overflow:auto;padding:1px 8px 8px}
+.ss-qj-item{display:flex;gap:8px;align-items:center;width:100%;padding:8px;border:none;border-radius:8px;background:transparent;color:var(--dsw-alias-label-primary);font-family:inherit;font-size:13px;line-height:20px;text-align:left;cursor:pointer}
+.ss-qj-item:hover,.ss-qj-item.active{background:var(--dsw-alias-bg-layer-2)}
+.ss-qj-item:focus-visible{outline:2px solid var(--dsw-alias-state-business-primary);outline-offset:-2px}
+.ss-qj-kind{flex:none;font-size:11px;color:var(--dsw-alias-label-tertiary);min-width:36px}
+.ss-qj-label{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ss-qj-meta{flex:none;font-size:11px;color:var(--dsw-alias-label-tertiary);max-width:45%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ss-qj-empty{padding:24px;text-align:center;color:var(--dsw-alias-label-tertiary);font-size:12px}
+.ss-qj-hint{padding:8px 12px;border-top:1px solid var(--dsw-alias-border-l1);font-size:11px;color:var(--dsw-alias-label-tertiary)}
+.ss-kbd{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:10px;line-height:16px;padding:0 4px;border-radius:4px;border:1px solid var(--dsw-alias-border-l2);background:var(--dsw-alias-bg-layer-2);color:var(--dsw-alias-label-secondary);margin-left:4px}
 `;
 
 /* ------------------------------------------------------------- primitives */
@@ -2094,8 +2172,29 @@ function makeStyles(bridge) {
 
 /* ---------------------------------------------------------------- dialogs */
 
+function describeSessionErrors(errors, nameById) {
+  return (Array.isArray(errors) ? errors : []).map((item) => {
+    const id = item && (item.sessionId || item.session_id || item.id);
+    const message = (item && (item.message || item.code)) || '';
+    const title = id && nameById ? nameById[id] : '';
+    const label = title ? `${title}（${id}）` : id;
+    return label ? `${label} - ${message}` : String(message);
+  });
+}
+
+function publishSettingsPatch(patch) {
+  try {
+    if (typeof window !== 'undefined' && typeof window.dispatchEvent === 'function') {
+      window.dispatchEvent(new CustomEvent('dsh-keeper:settings', { detail: patch }));
+    }
+  } catch (error) {
+    /* cross-instance sync is best effort */
+  }
+}
+
 function ConfirmDialog(props) {
-  const { t, title, body, confirmLabel, danger, onCancel, onConfirm } = props;
+  const { t, title, body, details, preview, confirmLabel, danger, onCancel, onConfirm } = props;
+  const [expanded, setExpanded] = React.useState(false);
   const cancelRef = React.useRef(null);
   React.useEffect(() => {
     if (cancelRef.current && typeof cancelRef.current.focus === 'function') cancelRef.current.focus();
@@ -2124,6 +2223,45 @@ function ConfirmDialog(props) {
       { className: 'ss-modal', role: 'dialog', 'aria-modal': 'true', 'aria-label': title },
       React.createElement('h3', null, title),
       React.createElement('p', null, body),
+      (Array.isArray(details) && details.length > 0) ||
+      (preview && Array.isArray(preview.items) && preview.items.length > 0)
+        ? React.createElement(
+            'div',
+            { className: 'ss-modalbody' },
+            Array.isArray(details) && details.length > 0
+              ? React.createElement(
+                  'div',
+                  { className: 'ss-modaldesc' },
+                  details.map((line, index) => React.createElement('div', { key: index }, line)),
+                )
+              : null,
+            preview && Array.isArray(preview.items) && preview.items.length > 0
+              ? React.createElement(
+                  'div',
+                  { className: 'ss-modalpreview' },
+                  React.createElement(
+                    'div',
+                    null,
+                    preview.prefix +
+                      (expanded
+                        ? preview.items.join('、')
+                        : preview.items.slice(0, 5).join('、') + (preview.items.length > 5 ? '…' : '')),
+                  ),
+                  preview.items.length > 5
+                    ? React.createElement(
+                        'button',
+                        {
+                          type: 'button',
+                          className: 'ss-previewtoggle',
+                          onClick: () => setExpanded((value) => !value),
+                        },
+                        expanded ? t('previewCollapse') : t('previewExpand').replace('{n}', String(preview.items.length)),
+                      )
+                    : null,
+                )
+              : null,
+          )
+        : null,
       React.createElement(
         'div',
         { className: 'ss-modalfoot' },
@@ -2167,6 +2305,17 @@ function ExportDialog(props) {
       'div',
       { className: 'ss-modal ss-exportmodal', role: 'dialog', 'aria-modal': 'true', 'aria-label': t('exportDialogTitle') },
       React.createElement('h3', null, t('exportDialogTitle')),
+      React.createElement(
+        'button',
+        {
+          type: 'button',
+          className: 'ss-modalclose',
+          title: t('close'),
+          'aria-label': t('close'),
+          onClick: onCancel,
+        },
+        '×',
+      ),
       React.createElement('p', { className: 'ss-dialoghint' }, t('exportDialogHint')),
       React.createElement(
         'div',
@@ -3048,6 +3197,265 @@ function BootstrapSkeleton() {
   );
 }
 
+/* --- quick jump palette (vanilla DOM; react-dom is not available in the plugin bundle) --- */
+
+const QUICK_JUMP_ID = 'dsh-keeper.quickJump';
+
+function createQuickJump(bridge, t) {
+  let root = null;
+  let input = null;
+  let list = null;
+  let rows = [];
+  let active = 0;
+  let sessions = [];
+  let workspaces = [];
+  let actions = [];
+
+  function close() {
+    if (!root) return;
+    document.removeEventListener('keydown', onKeyDown, true);
+    root.remove();
+    root = null;
+    input = null;
+    list = null;
+    rows = [];
+  }
+
+  function openPanelTab(tab, extra) {
+    close();
+    try {
+      bridge.openPanel(PANEL_ID);
+      window.dispatchEvent(
+        new CustomEvent('dsh-keeper:switch-tab', { detail: { tab, ...(extra || {}) } }),
+      );
+    } catch {
+      /* best effort */
+    }
+  }
+
+  function workspaceRow(workspace) {
+    const title = String(workspace?.title || workspace?.path || workspace?.id || '');
+    return {
+      kind: 'workspace',
+      id: String(workspace?.id ?? ''),
+      title,
+      run: () => openPanelTab('sessions', { query: title }),
+    };
+  }
+
+  function buildActions() {
+    return [
+      { kind: 'action', id: 'tab:sessions', label: t('quickJumpOpenTab').replace('{name}', t('tabSessions')), run: () => openPanelTab('sessions') },
+      { kind: 'action', id: 'tab:notify', label: t('quickJumpOpenTab').replace('{name}', t('tabNotify')), run: () => openPanelTab('notify') },
+      { kind: 'action', id: 'tab:panels', label: t('quickJumpOpenTab').replace('{name}', t('tabPanels')), run: () => openPanelTab('panels') },
+      { kind: 'action', id: 'tab:trash', label: t('quickJumpOpenTab').replace('{name}', t('tabTrash')), run: () => openPanelTab('trash') },
+      {
+        kind: 'action',
+        id: 'settings',
+        label: t('quickJumpSettings'),
+        run: () => {
+          close();
+          try {
+            bridge.openSettings();
+          } catch {
+            /* ignore */
+          }
+        },
+      },
+      { kind: 'action', id: 'refresh', label: t('quickJumpRefresh'), run: () => { void reload(true); } },
+    ];
+  }
+
+  function kindLabel(row) {
+    if (row.kind === 'session') return t('quickJumpGroupSessions');
+    if (row.kind === 'workspace') return t('quickJumpGroupWorkspaces');
+    return t('quickJumpGroupActions');
+  }
+
+  function filterRows(value) {
+    const q = String(value ?? '').trim().toLowerCase();
+    const match = (text) => String(text ?? '').toLowerCase().includes(q);
+    if (!q) return [...actions, ...workspaces.map(workspaceRow), ...sessions.slice(0, 20)];
+    return [
+      ...sessions.filter((session) => match(session.title) || match(session.workspaceTitle)).slice(0, 50),
+      ...workspaces.filter((workspace) => match(workspace?.title || workspace?.path || workspace?.id)).map(workspaceRow),
+      ...actions.filter((action) => match(action.label)),
+    ];
+  }
+
+  function paint() {
+    if (!list) return;
+    list.textContent = '';
+    if (rows.length === 0) {
+      const empty = document.createElement('div');
+      empty.className = 'ss-qj-empty';
+      empty.textContent = t('quickJumpEmpty');
+      list.append(empty);
+      return;
+    }
+    rows.forEach((row, index) => {
+      const item = document.createElement('button');
+      item.type = 'button';
+      item.className = `ss-qj-item${index === active ? ' active' : ''}`;
+      item.setAttribute('role', 'option');
+      item.setAttribute('aria-selected', index === active ? 'true' : 'false');
+      const kind = document.createElement('span');
+      kind.className = 'ss-qj-kind';
+      kind.textContent = kindLabel(row);
+      const label = document.createElement('span');
+      label.className = 'ss-qj-label';
+      label.textContent = row.kind === 'action' ? row.label : row.title;
+      item.append(kind, label);
+      if (row.kind === 'session') {
+        const meta = document.createElement('span');
+        meta.className = 'ss-qj-meta';
+        meta.textContent = row.workspaceTitle;
+        item.append(meta);
+      }
+      item.addEventListener('mouseenter', () => {
+        active = index;
+        Array.from(list.children).forEach((child, childIndex) => {
+          if (child instanceof HTMLElement) child.classList.toggle('active', childIndex === index);
+        });
+      });
+      item.addEventListener('click', () => runRow(row));
+      list.append(item);
+    });
+  }
+
+  function runRow(row) {
+    if (!row) return;
+    if (row.kind === 'session') {
+      close();
+      Promise.resolve(bridge.openSession(row.id)).catch(() => {});
+      return;
+    }
+    row.run();
+  }
+
+  function move(delta) {
+    if (rows.length === 0) return;
+    active = (active + delta + rows.length) % rows.length;
+    paint();
+    const current = list && list.children[active];
+    if (current && typeof current.scrollIntoView === 'function') current.scrollIntoView({ block: 'nearest' });
+  }
+
+  function onKeyDown(event) {
+    if (!root) return;
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      event.stopPropagation();
+      close();
+      return;
+    }
+    if (event.key === 'ArrowDown') {
+      event.preventDefault();
+      event.stopPropagation();
+      move(1);
+      return;
+    }
+    if (event.key === 'ArrowUp') {
+      event.preventDefault();
+      event.stopPropagation();
+      move(-1);
+      return;
+    }
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      event.stopPropagation();
+      runRow(rows[active]);
+    }
+  }
+
+  function onInput() {
+    active = 0;
+    rows = filterRows(input ? input.value : '');
+    paint();
+  }
+
+  async function reload(force) {
+    let boot = null;
+    try {
+      boot = await loadBootstrap(bridge, { force });
+    } catch {
+      boot = null;
+    }
+    const workspaceList = Array.isArray(boot?.workspaces) ? boot.workspaces : [];
+    const sessionList = [];
+    for (const workspace of workspaceList) {
+      for (const session of workspace?.sessions ?? []) {
+        if (!session?.id) continue;
+        sessionList.push({
+          kind: 'session',
+          id: session.id,
+          title: String(session.title || session.id),
+          workspaceId: String(workspace.id ?? ''),
+          workspaceTitle: String(workspace.title || workspace.path || workspace.id || ''),
+          updatedAt: Number(session.updatedAt) || 0,
+          running: session.running === true,
+        });
+      }
+    }
+    sessionList.sort((left, right) => right.updatedAt - left.updatedAt);
+    workspaces = workspaceList;
+    sessions = sessionList;
+    actions = buildActions();
+    if (input) {
+      rows = filterRows(input.value);
+      paint();
+    }
+  }
+
+  async function open() {
+    if (root) {
+      close();
+      return;
+    }
+    const overlay = document.createElement('div');
+    overlay.className = 'ss-qj-overlay';
+    overlay.addEventListener('mousedown', (event) => {
+      if (event.target === overlay) close();
+    });
+    const panel = document.createElement('div');
+    panel.className = 'ss-qj-panel';
+    panel.setAttribute('role', 'dialog');
+    panel.setAttribute('aria-modal', 'true');
+    panel.setAttribute('aria-label', t('quickJump'));
+    const head = document.createElement('div');
+    head.className = 'ss-qj-head';
+    head.textContent = t('quickJump');
+    const field = document.createElement('input');
+    field.className = 'ss-qj-input';
+    field.type = 'text';
+    field.placeholder = t('quickJumpPlaceholder');
+    field.setAttribute('autocomplete', 'off');
+    field.setAttribute('spellcheck', 'false');
+    const hint = document.createElement('div');
+    hint.className = 'ss-qj-hint';
+    hint.textContent = `${t('quickJumpHint')} · ${t('quickJumpKeysHint')}`;
+    const container = document.createElement('div');
+    container.className = 'ss-qj-list';
+    container.setAttribute('role', 'listbox');
+    input = field;
+    list = container;
+    panel.append(head, field, container, hint);
+    overlay.append(panel);
+    root = overlay;
+    document.body.append(overlay);
+    document.addEventListener('keydown', onKeyDown, true);
+    field.addEventListener('input', onInput);
+    field.focus();
+    await reload(false);
+  }
+
+  function toggle() {
+    void open();
+  }
+
+  return { open, close, toggle };
+}
+
 function MainPanel(props) {
   const { t, bridge } = props;
   // Paint the last snapshot immediately (stale-while-revalidate) instead of an
@@ -3056,6 +3464,20 @@ function MainPanel(props) {
   const [loadError, setLoadError] = React.useState(null);
   const [busy, setBusy] = React.useState(false);
   const [tab, setTab] = React.useState('sessions');
+  const [qjKeys, setQjKeys] = React.useState(() => (typeof bridge?.shortcutKeys === 'function' ? bridge.shortcutKeys() : []));
+  React.useEffect(() => {
+    if (typeof bridge?.subscribeShortcutKeys !== 'function') return undefined;
+    return bridge.subscribeShortcutKeys((keys) => setQjKeys(Array.isArray(keys) ? keys : []));
+  }, []);
+  React.useEffect(() => {
+    const onSwitchTab = (event) => {
+      const detail = event && event.detail ? event.detail : {};
+      if (typeof detail.tab === 'string') setTab(detail.tab);
+      if (typeof detail.query === 'string') setQuery(detail.query);
+    };
+    window.addEventListener('dsh-keeper:switch-tab', onSwitchTab);
+    return () => window.removeEventListener('dsh-keeper:switch-tab', onSwitchTab);
+  }, []);
   const [query, setQuery] = React.useState('');
   const [panelQuery, setPanelQuery] = React.useState('');
   const [scopeFilter, setScopeFilter] = React.useState('all');
@@ -3087,6 +3509,7 @@ function MainPanel(props) {
   // pointer away restarts the full 5s window.
   const [toastHovered, setToastHovered] = React.useState(false);
   const [confirm, setConfirm] = React.useState(null);
+  const [outcome, setOutcome] = React.useState(null);
   const [tick, setTick] = React.useState(0);
   const [reloadKey, setReloadKey] = React.useState(0);
   const bootJsonRef = React.useRef('');
@@ -3129,6 +3552,28 @@ function MainPanel(props) {
     return () => {
       window.removeEventListener('dsh-keeper:notify-log', onLog);
       window.removeEventListener('storage', onStorage);
+    };
+  }, []);
+
+  React.useEffect(() => {
+    if (typeof window === 'undefined' || typeof window.addEventListener !== 'function') return undefined;
+    const onSettings = (event) => {
+      const patch = event && event.detail;
+      if (!patch || typeof patch !== 'object') return;
+      setBoot((previous) => {
+        if (!previous) return previous;
+        const state = previous.state ?? {};
+        const current = state.settings ?? {};
+        const next = { ...current, ...patch };
+        if (patch.notifications) {
+          next.notifications = { ...(current.notifications ?? {}), ...patch.notifications };
+        }
+        return { ...previous, state: { ...state, settings: next } };
+      });
+    };
+    window.addEventListener('dsh-keeper:settings', onSettings);
+    return () => {
+      window.removeEventListener('dsh-keeper:settings', onSettings);
     };
   }, []);
 
@@ -3411,20 +3856,69 @@ function MainPanel(props) {
     const mode = settings.deleteMode === 'delete' ? 'delete' : 'trash';
     const rows = sessions.filter((session) => ids.includes(session.id));
     const size = rows.reduce((sum, session) => sum + (Number(session.sizeBytes) || 0), 0);
+    const workspaceNames = [
+      ...new Set(
+        rows
+          .map((session) => session.workspaceTitle || session.workspaceId || '')
+          .filter(Boolean),
+      ),
+    ];
+    const details = [];
+    if (workspaceNames.length > 0) {
+      details.push(t('deleteWorkspaces').replace('{names}', workspaceNames.join('、')));
+    }
+    const preview = {
+      prefix: t('deleteSessionList').replace('{names}', ''),
+      items: rows.map((session) => session.title || session.id),
+    };
+    const nameById = Object.fromEntries(rows.map((session) => [session.id, session.title || '']));
 
     if (mode === 'trash') {
-      void run(async () => {
-        const result = await bridge.api('deleteSessions', { sessionIds: ids, mode: 'trash' });
-        const done = (result?.done ?? []).map((item) => item.sessionId);
-        const errors = result?.errors ?? [];
-        setSelected(new Set());
-        if (errors.length > 0) return errors[0].message;
-        if (done.length === 0) return '';
-        setToast({
-          text: t('movedToTrash').replace('{n}', String(done.length)),
-          undoValue: { kind: 'restore', ids: done },
+      const runTrash = () =>
+        run(async () => {
+          const result = await bridge.api('deleteSessions', { sessionIds: ids, mode: 'trash' });
+          const done = (result?.done ?? []).map((item) => item.sessionId);
+          const errors = result?.errors ?? [];
+          setSelected(new Set());
+          if (errors.length > 0) {
+            if (done.length > 0) {
+              setToast({
+                text: t('movedToTrash').replace('{n}', String(done.length)),
+                undoValue: { kind: 'restore', ids: done },
+              });
+            }
+            setOutcome({
+              title: t('deleteFailedTitle'),
+              body: t('deletePartial')
+                .replace('{ok}', String(done.length))
+                .replace('{fail}', String(errors.length)),
+              details: describeSessionErrors(errors, nameById),
+            });
+            return '';
+          }
+          if (done.length === 0) return '';
+          setToast({
+            text: t('movedToTrash').replace('{n}', String(done.length)),
+            undoValue: { kind: 'restore', ids: done },
+          });
+          return '';
         });
-        return '';
+      if (!settings.confirmPurge) {
+        void runTrash();
+        return;
+      }
+      setConfirm({
+        title: t('confirmTrashTitle'),
+        body: t('confirmTrashBody')
+          .replace('{n}', String(rows.length || ids.length))
+          .replace('{size}', fmtBytes(size)),
+        details,
+        preview,
+        confirmLabel: t('moveToTrash'),
+        onConfirm: async () => {
+          setConfirm(null);
+          await runTrash();
+        },
       });
       return;
     }
@@ -3436,7 +3930,13 @@ function MainPanel(props) {
         const errors = result?.errors ?? [];
         setSelected(new Set());
         if (errors.length > 0) {
-          setToast({ text: errors[0].message });
+          setOutcome({
+            title: t('deleteFailedTitle'),
+            body: t('deletePartial')
+              .replace('{ok}', String(done.length))
+              .replace('{fail}', String(errors.length)),
+            details: describeSessionErrors(errors, nameById),
+          });
           return '';
         }
         if (done.length === 0) return '';
@@ -3451,6 +3951,8 @@ function MainPanel(props) {
       body: t('confirmDeleteBody')
         .replace('{n}', String(rows.length || ids.length))
         .replace('{size}', fmtBytes(size)),
+      details,
+      preview,
       danger: true,
       onConfirm: async () => {
         setConfirm(null);
@@ -3530,11 +4032,32 @@ function MainPanel(props) {
   const purgeFromTrash = (ids) => {
     const rows = trash.filter((entry) => ids.includes(entry.sessionId));
     const size = rows.reduce((sum, entry) => sum + (Number(entry.sizeBytes) || 0), 0);
+    const workspaceNames = [
+      ...new Set(rows.map((entry) => entry.workspaceTitle || entry.workspaceId || '').filter(Boolean)),
+    ];
+    const details = [];
+    if (workspaceNames.length > 0) {
+      details.push(t('deleteWorkspaces').replace('{names}', workspaceNames.join('、')));
+    }
+    const preview = {
+      prefix: t('purgeSessionList').replace('{names}', ''),
+      items: rows.map((entry) => entry.title || entry.sessionId),
+    };
+    const nameById = Object.fromEntries(rows.map((entry) => [entry.sessionId, entry.title || '']));
     const runPurge = () =>
       run(async () => {
         const result = await bridge.api('purgeSessions', { sessionIds: ids });
         const done = (result?.done ?? []).length;
+        const errors = result?.errors ?? [];
         setSelected(new Set());
+        if (errors.length > 0) {
+          setOutcome({
+            title: t('purgeFailedTitle'),
+            body: t('purgePartial').replace('{ok}', String(done)).replace('{fail}', String(errors.length)),
+            details: describeSessionErrors(errors, nameById),
+          });
+          return '';
+        }
         return t('purgedMsg').replace('{n}', String(done));
       });
     if (!settings.confirmPurge) {
@@ -3544,6 +4067,8 @@ function MainPanel(props) {
     setConfirm({
       title: t('confirmPurgeTitle'),
       body: t('confirmPurgeBody').replace('{n}', String(rows.length)).replace('{size}', fmtBytes(size)),
+      details,
+      preview,
       danger: true,
       onConfirm: async () => {
         setConfirm(null);
@@ -3554,17 +4079,46 @@ function MainPanel(props) {
 
   const emptyTrash = () => {
     if (trash.length === 0) return;
+    const workspaceNames = [
+      ...new Set(trash.map((entry) => entry.workspaceTitle || entry.workspaceId || '').filter(Boolean)),
+    ];
+    const details = [];
+    if (workspaceNames.length > 0) {
+      details.push(t('deleteWorkspaces').replace('{names}', workspaceNames.join('、')));
+    }
+    const preview = {
+      prefix: t('purgeSessionList').replace('{names}', ''),
+      items: trash.map((entry) => entry.title || entry.sessionId),
+    };
+    const nameById = Object.fromEntries(trash.map((entry) => [entry.sessionId, entry.title || '']));
+    const runEmpty = () =>
+      run(async () => {
+        const result = await bridge.api('emptyTrash', {});
+        const done = (result?.done ?? []).length;
+        const errors = result?.errors ?? [];
+        if (errors.length > 0) {
+          setOutcome({
+            title: t('purgeFailedTitle'),
+            body: t('purgePartial').replace('{ok}', String(done)).replace('{fail}', String(errors.length)),
+            details: describeSessionErrors(errors, nameById),
+          });
+          return '';
+        }
+        return t('purgedMsg').replace('{n}', String(done));
+      });
+    if (!settings.confirmPurge) {
+      void runEmpty();
+      return;
+    }
     setConfirm({
       title: t('confirmEmptyTitle'),
       body: t('confirmEmptyBody').replace('{n}', String(trash.length)).replace('{size}', fmtBytes(trashSize)),
+      details,
+      preview,
       danger: true,
       onConfirm: async () => {
         setConfirm(null);
-        await run(async () => {
-          const result = await bridge.api('emptyTrash', {});
-          const done = (result?.done ?? []).length;
-          return t('purgedMsg').replace('{n}', String(done));
-        });
+        await runEmpty();
       },
     });
   };
@@ -3574,7 +4128,15 @@ function MainPanel(props) {
       const result = await bridge.api('cleanBlankSessions', {});
       const done = (result?.done ?? []).filter((item) => !item.detachedOnly).map((item) => item.sessionId);
       const errors = result?.errors ?? [];
-      if (errors.length > 0) return errors[0].message;
+      const nameById = Object.fromEntries(blankSessions.map((session) => [session.id, session.title || '']));
+      if (errors.length > 0) {
+        setOutcome({
+          title: t('deleteFailedTitle'),
+          body: t('cleanPartial').replace('{ok}', String(done.length)).replace('{fail}', String(errors.length)),
+          details: describeSessionErrors(errors, nameById),
+        });
+        return '';
+      }
       if (done.length === 0) return '';
       setToast({
         text: t('cleanedMsg').replace('{n}', String(done.length)),
@@ -3590,9 +4152,29 @@ function MainPanel(props) {
 
   const askCleanBlank = () => {
     if (blankSessions.length === 0) return;
+    const size = blankSessions.reduce((sum, session) => sum + (Number(session.sizeBytes) || 0), 0);
+    const workspaceNames = [
+      ...new Set(blankSessions.map((session) => session.workspaceTitle || session.workspaceId || '').filter(Boolean)),
+    ];
+    const details = [];
+    if (workspaceNames.length > 0) {
+      details.push(t('deleteWorkspaces').replace('{names}', workspaceNames.join('、')));
+    }
+    const preview = {
+      prefix: t('deleteSessionList').replace('{names}', ''),
+      items: blankSessions.map((session) => session.title || session.id),
+    };
+    if (!settings.confirmPurge) {
+      void cleanBlank();
+      return;
+    }
     setConfirm({
       title: t('cleanBlankConfirmTitle'),
-      body: t('cleanBlankConfirmBody').replace('{n}', String(blankSessions.length)),
+      body: t('cleanBlankConfirmBody')
+        .replace('{n}', String(blankSessions.length))
+        .replace('{size}', fmtBytes(size)),
+      details,
+      preview,
       onConfirm: async () => {
         setConfirm(null);
         await cleanBlank();
@@ -4033,6 +4615,19 @@ function MainPanel(props) {
           'button',
           {
             type: 'button',
+            className: 'ss-btn quiet',
+            title: t('quickJumpKeysHint'),
+            onClick: () => {
+              if (bridge && typeof bridge.quickJump === 'function') bridge.quickJump();
+            },
+          },
+          t('quickJump'),
+          qjKeys.length > 0 ? React.createElement('kbd', { className: 'ss-kbd' }, qjKeys.join('+')) : null,
+        ),
+        React.createElement(
+          'button',
+          {
+            type: 'button',
             className: 'ss-btn',
             disabled: busy || blankSessions.length === 0,
             title: blankSessions.length === 0 ? t('autoCleanEmpty') : undefined,
@@ -4072,14 +4667,51 @@ function MainPanel(props) {
               null,
               React.createElement('b', null, t('selectedN').replace('{n}', String(selected.size))),
               React.createElement(
+                'span',
+                null,
+                fmtBytes(
+                  sessions
+                    .filter((session) => selected.has(session.id))
+                    .reduce((sum, session) => sum + (Number(session.sizeBytes) || 0), 0),
+                ),
+              ),
+              React.createElement(
+                'span',
+                null,
+                t('workspacesN').replace(
+                  '{n}',
+                  String(
+                    new Set(
+                      sessions
+                        .filter((session) => selected.has(session.id))
+                        .map((session) => session.workspaceTitle || session.workspaceId || '')
+                        .filter(Boolean),
+                    ).size,
+                  ),
+                ),
+              ),
+              React.createElement(
                 Tip,
                 { text: t('archiveSessionHint') },
                 React.createElement('button', { type: 'button', className: 'ss-btn tiny', disabled: busy, onClick: () => archiveSessions([...selected]) }, t('archive')),
               ),
               React.createElement(
                 Tip,
-                { text: listDeleteHint },
-                React.createElement('button', { type: 'button', className: 'ss-btn tiny', disabled: busy, onClick: () => deleteSessionsFromList([...selected]) }, listDeleteLabel),
+                {
+                  text: sessions.some((session) => selected.has(session.id) && session.running)
+                    ? t('runningHint')
+                    : listDeleteHint,
+                },
+                React.createElement(
+                  'button',
+                  {
+                    type: 'button',
+                    className: 'ss-btn tiny',
+                    disabled: busy || sessions.some((session) => selected.has(session.id) && session.running),
+                    onClick: () => deleteSessionsFromList([...selected]),
+                  },
+                  listDeleteLabel,
+                ),
               ),
             )
           : React.createElement(
@@ -6333,9 +6965,22 @@ function MainPanel(props) {
           t,
           title: confirm.title,
           body: confirm.body,
+          details: confirm.details ?? null,
+          preview: confirm.preview ?? null,
           danger: confirm.danger === true,
           onCancel: () => setConfirm(null),
           onConfirm: confirm.onConfirm,
+        })
+      : null,
+    outcome
+      ? React.createElement(ConfirmDialog, {
+          t,
+          title: outcome.title,
+          body: outcome.body,
+          details: outcome.details ?? null,
+          confirmLabel: t('close'),
+          onCancel: () => setOutcome(null),
+          onConfirm: () => setOutcome(null),
         })
       : null,
     exportTarget
@@ -6387,6 +7032,7 @@ function SettingsPage(props) {
   const [error, setError] = React.useState(null);
   const [busy, setBusy] = React.useState(false);
   const [toast, setToast] = React.useState(null);
+  const [confirm, setConfirm] = React.useState(null);
   const [reloadKey, setReloadKey] = React.useState(0);
 
   React.useEffect(() => {
@@ -6419,7 +7065,8 @@ function SettingsPage(props) {
   const hidden = new Set(boot?.state?.hiddenPanels ?? []);
   const paths = boot?.paths ?? {};
   const version = boot?.version ?? '0.1.5';
-  const trashCount = Array.isArray(boot?.trash) ? boot.trash.length : 0;
+  const trash = Array.isArray(boot?.trash) ? boot.trash : [];
+  const trashCount = trash.length;
 
   const call = async (work, message) => {
     setBusy(true);
@@ -6437,6 +7084,7 @@ function SettingsPage(props) {
   const saveSettings = (patch) =>
     call(async () => {
       await bridge.api('saveSettings', { settings: patch });
+      publishSettingsPatch(patch);
     }, t('settingsSaved'));
 
   const setConfirmPurge = (value) => saveSettings({ confirmPurge: value });
@@ -6470,6 +7118,12 @@ function SettingsPage(props) {
       bridge.applyHide([...next], bridge.listPanels());
     }, t('panelsSaved'));
 
+  const [qjKeys, setQjKeys] = React.useState(() => (typeof bridge?.shortcutKeys === 'function' ? bridge.shortcutKeys() : []));
+  React.useEffect(() => {
+    if (typeof bridge?.subscribeShortcutKeys !== 'function') return undefined;
+    return bridge.subscribeShortcutKeys((keys) => setQjKeys(Array.isArray(keys) ? keys : []));
+  }, []);
+
   const resetSettings = () =>
     call(async () => {
       await bridge.api('resetSettings', {});
@@ -6481,10 +7135,56 @@ function SettingsPage(props) {
       bridge.applyHide([], bridge.listPanels());
     }, t('panelsSaved'));
 
-  const emptyTrashNow = () =>
-    call(async () => {
-      await bridge.api('emptyTrash', {});
-    }, t('trashEmptied'));
+  const emptyTrashNow = () => {
+    if (busy || trash.length === 0) return;
+    const size = trash.reduce((sum, entry) => sum + (Number(entry.sizeBytes) || 0), 0);
+    const workspaceNames = [...new Set(trash.map((entry) => entry.workspaceTitle || entry.workspaceId || '').filter(Boolean))];
+    const details = [];
+    if (workspaceNames.length > 0) {
+      details.push(React.createElement('div', null, t('deleteWorkspaces').replace('{names}', workspaceNames.join('、'))));
+    }
+    const preview = {
+      prefix: t('purgeSessionList').replace('{names}', ''),
+      items: trash.map((entry) => entry.title || entry.sessionId),
+    };
+    const runEmpty = async () => {
+      setBusy(true);
+      try {
+        const result = await bridge.api('emptyTrash', {});
+        const errors = result?.errors ?? [];
+        if (errors.length > 0) {
+          const done = (result?.done ?? []).length;
+          setToast({
+            text: t('purgePartial')
+              .replace('{ok}', String(done))
+              .replace('{fail}', String(errors.length)),
+          });
+        } else {
+          setToast({ text: t('trashEmptied') });
+        }
+        setReloadKey((key) => key + 1);
+      } catch (callError) {
+        setToast({ text: callError?.message || String(callError) });
+      } finally {
+        setBusy(false);
+      }
+    };
+    if (!settings.confirmPurge) {
+      void runEmpty();
+      return;
+    }
+    setConfirm({
+      title: t('confirmEmptyTitle'),
+      body: t('confirmEmptyBody').replace('{n}', String(trash.length)).replace('{size}', fmtBytes(size)),
+      details,
+      preview,
+      danger: true,
+      onConfirm: () => {
+        setConfirm(null);
+        void runEmpty();
+      },
+    });
+  };
 
   const field = (label, hint, control) =>
     React.createElement(
@@ -6557,6 +7257,11 @@ function SettingsPage(props) {
                 disabled: busy,
                 onChange: (value) => setConfirmPurge(value),
               }),
+            ),
+            field(
+              iconLabel(React.createElement(BellIcon), t('shortcutTitle')),
+              t('shortcutHint'),
+              React.createElement('kbd', { className: 'ss-kbd' }, qjKeys.length > 0 ? qjKeys.join('+') : '—'),
             ),
             field(
               iconLabel(React.createElement(SidebarIcon), t('entryVisible')),
@@ -6641,6 +7346,19 @@ function SettingsPage(props) {
               React.createElement('div', { className: 'ss-mono' }, String(paths.sessionsRoot ?? '')),
             ),
           ),
+      confirm
+        ? React.createElement(ConfirmDialog, {
+            t,
+            title: confirm.title,
+            body: confirm.body,
+            details: confirm.details,
+            preview: confirm.preview,
+            danger: confirm.danger === true,
+            confirmLabel: confirm.confirmLabel,
+            onCancel: () => setConfirm(null),
+            onConfirm: confirm.onConfirm,
+          })
+        : null,
       toast ? React.createElement(Toast, { text: toast.text }) : null,
     ),
   );
@@ -7095,6 +7813,31 @@ function apply(ctx) {
     }
   };
 
+  let quickJump = null;
+  let quickJumpShortcuts = null;
+  const quickJumpKeyListeners = new Set();
+  const readQuickJumpKeys = () => {
+    try {
+      const entries = quickJumpShortcuts && typeof quickJumpShortcuts.catalog?.getSnapshot === 'function'
+        ? quickJumpShortcuts.catalog.getSnapshot()
+        : null;
+      const row = Array.isArray(entries) ? entries.find((entry) => entry && entry.id === QUICK_JUMP_ID) : null;
+      return Array.isArray(row?.keys) ? row.keys : [];
+    } catch (error) {
+      return [];
+    }
+  };
+  const publishQuickJumpKeys = () => {
+    const keys = readQuickJumpKeys();
+    for (const listener of quickJumpKeyListeners) {
+      try {
+        listener(keys);
+      } catch (error) {
+        /* ignore listener errors */
+      }
+    }
+  };
+
   const bridge = {
     api,
     listPanels,
@@ -7106,10 +7849,79 @@ function apply(ctx) {
     subscribePanels,
     hasForeignMoreRows,
     openSession,
+    quickJump: () => {
+      if (quickJump) quickJump.toggle();
+    },
+    shortcutKeys: readQuickJumpKeys,
+    subscribeShortcutKeys: (listener) => {
+      if (typeof listener !== 'function') return () => {};
+      quickJumpKeyListeners.add(listener);
+      listener(readQuickJumpKeys());
+      return () => quickJumpKeyListeners.delete(listener);
+    },
     panelMemory: readPanelMemory(),
     rememberPanels: writePanelMemory,
     ...makeStyles(),
   };
+  quickJump = createQuickJump(bridge, t);
+
+  // Session-wide quick jump: Ctrl+Alt+K (Cmd+Option+K on macOS). DSH core already
+  // owns plain Ctrl+K for the sidebar search, so this command uses Alt as well.
+  try {
+    if (typeof ctx.inject === 'function') {
+      ctx.inject(['shortcuts'], (scope) => {
+        scope.effect(() => {
+          const shortcuts = scope.shortcuts;
+          if (!shortcuts || typeof shortcuts.register !== 'function') return () => {};
+          quickJumpShortcuts = shortcuts;
+          const defaults = {};
+          for (const runtime of ['desktop', 'web']) {
+            for (const platform of ['windows', 'macos', 'linux']) {
+              defaults[`${runtime}:${platform}`] = { code: 'KeyK', modifiers: ['primary', 'alt'] };
+            }
+          }
+          let dispose = () => {};
+          try {
+            dispose = shortcuts.register({
+              id: QUICK_JUMP_ID,
+              label: () => t('quickJump'),
+              aliases: ['jump', 'quick jump', '快速跳转', 'palette'],
+              defaults,
+              regions: ['page', 'editable'],
+              modals: [],
+              resolve: () => ({
+                status: 'handled',
+                run: () => {
+                  if (quickJump) quickJump.toggle();
+                },
+              }),
+            });
+          } catch (error) {
+            console.warn('[dsh-keeper] quick jump shortcut registration failed:', error);
+          }
+          const offCatalog = shortcuts.catalog && typeof shortcuts.catalog.subscribe === 'function'
+            ? shortcuts.catalog.subscribe(() => publishQuickJumpKeys())
+            : () => {};
+          publishQuickJumpKeys();
+          return () => {
+            try {
+              dispose();
+            } catch (error) {
+              /* ignore */
+            }
+            try {
+              offCatalog();
+            } catch (error) {
+              /* ignore */
+            }
+            quickJumpShortcuts = null;
+          };
+        }, 'dsh-keeper: quick jump shortcut');
+      });
+    }
+  } catch (error) {
+    console.warn('[dsh-keeper] quick jump shortcut unavailable:', error);
+  }
 
   /** Register without taking the whole plugin down if a host lacks a slot. */
   const safeRegister = (options, component) => {
